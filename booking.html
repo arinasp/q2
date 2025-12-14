@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Бронирование — DarkRoom</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,18 +16,29 @@
     theme: {
       fontFamily: {
         sans: ['Marmelad', 'sans-serif']
+      },
+      extend: {
+        fontSize: {
+          'xs': ['0.75rem', { lineHeight: '1rem' }],
+          'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+          'base': ['1rem', { lineHeight: '1.5rem' }],
+          'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+          'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+          '2xl': ['1.5rem', { lineHeight: '2rem' }],
+          '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+          '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        }
       }
     }
   };
 </script>
-
-
 </head>
-<body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
+<body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white overflow-x-hidden">
 
-<header class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/90 dark:bg-black/80 backdrop-blur">
+<!-- ХЕДЕР -->
+<header class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/95 dark:bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 supports-[backdrop-filter]:dark:bg-black/80">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    <div class="text-2xl font-extrabold uppercase tracking-widest">
+    <div class="text-xl sm:text-2xl font-extrabold uppercase tracking-widest">
       Dark<span class="text-blue-500">ROOM</span>
     </div>
 
@@ -40,25 +51,25 @@
     </nav>
 
     <div class="flex items-center space-x-3">
-      <!-- КНОПКА ТЕМЫ (та же, что была – тема не ломаем) -->
+      <!-- КНОПКА ТЕМЫ -->
       <button id="themeToggle"
-              class="w-10 h-10 flex items-center justify-center rounded-full
+              class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
                      border border-gray-300 dark:border-slate-700
                      bg-white dark:bg-slate-900
                      text-gray-700 dark:text-gray-200
                      hover:border-blue-500 dark:hover:border-blue-400
                      transition"
               aria-label="Переключить тему">
-        <span id="themeIcon">☾</span>
+        <span id="themeIcon" class="text-lg">☾</span>
       </button>
 
       <!-- ДЕСКТОП КАБИНЕТ -->
       <a href="account.html"
-         class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+         class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition text-sm">
         Личный кабинет
       </a>
 
-      <!-- БУРГЕР как на index -->
+      <!-- БУРГЕР КАК В INDEX.HTML -->
       <button id="burgerBtn" class="burger md:hidden flex flex-col justify-center items-center w-10 h-10 relative">
         <span class="burger-line top-line bg-gray-700 dark:bg-gray-300"></span>
         <span class="burger-line mid-line bg-gray-700 dark:bg-gray-300"></span>
@@ -67,31 +78,18 @@
     </div>
   </div>
 
-  <!-- МОБИЛЬНОЕ МЕНЮ как на index -->
-  <div id="mobileMenu"
-       class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
+  <!-- МОБИЛЬНОЕ МЕНЮ (как в index.html) -->
+  <div id="mobileMenu" class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
     <div class="px-6 py-4">
       <nav class="flex flex-col space-y-4">
-        <a href="index.html"
-           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-semibold py-2 transition-colors">
-          Квесты
-        </a>
-        <a href="booking.html"
-           class="text-blue-600 dark:text-blue-400 font-semibold py-2 transition-colors">
-          Бронирование
-        </a>
-        <a href="index.html#faq"
-           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">
-          FAQ
-        </a>
-        <a href="index.html#footerContacts"
-           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">
-          Контакты
-        </a>
+        <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-semibold py-2 transition-colors">Квесты</a>
+        <a href="booking.html" class="text-blue-600 dark:text-blue-400 font-semibold py-2 transition-colors">Бронирование</a>
+        <a href="index.html#faq" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">FAQ</a>
+        <a href="index.html#footerContacts" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">Контакты</a>
       </nav>
-
+      
       <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-800">
-        <!-- Неавторизован -->
+        <!-- Для неавторизованных пользователей -->
         <div id="mobileAuthButtons" class="flex flex-col space-y-3">
           <a id="mobileLoginBtn" href="login.html"
              class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
@@ -102,8 +100,8 @@
             Регистрация
           </a>
         </div>
-
-        <!-- Авторизован -->
+        
+        <!-- Для авторизованных пользователей -->
         <div id="mobileUserSection" class="hidden flex-col space-y-3">
           <div class="text-center py-3 text-gray-600 dark:text-gray-300 font-medium">
             <span id="mobileUserGreeting"></span>
@@ -122,53 +120,50 @@
   </div>
 </header>
 
-
-
-<main class="max-w-7xl mx-auto px-4 py-10">
-  <h1 class="text-3xl md:text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">
+<main class="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-10">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 text-gray-900 dark:text-white">
     Бронирование квеста
   </h1>
+  
   <!-- Информация о квесте -->
-<section id="questInfo"
-  class="mb-10 bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
+  <section id="questInfo"
+    class="mb-8 sm:mb-10 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
 
-  <img id="questImage"
-       class="w-full h-64 object-cover"
-       alt="Квест">
+    <img id="questImage"
+         class="w-full h-48 sm:h-64 object-cover"
+         alt="Квест"
+         loading="lazy">
 
-  <div class="p-6 space-y-3">
-    <h2 id="questTitle" class="text-2xl font-extrabold"></h2>
+    <div class="p-4 sm:p-6 space-y-3">
+      <h2 id="questTitle" class="text-xl sm:text-2xl font-extrabold"></h2>
 
-    <p id="questDescription"
-       class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
+      <p id="questDescription"
+         class="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
+      </p>
 
-    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200 dark:border-slate-700 text-center text-sm">
-      <div>
-        
-        <div id="questDuration" class="font-semibold"></div>
-      </div>
-      <div>
-        
-        <div id="questPlayers" class="font-semibold"></div>
-      </div>
-      <div>
-        
-        <div id="questAge" class="font-semibold"></div>
+      <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-4 border-t border-gray-200 dark:border-slate-700 text-center text-xs sm:text-sm">
+        <div>
+          <div id="questDuration" class="font-semibold"></div>
+        </div>
+        <div>
+          <div id="questPlayers" class="font-semibold"></div>
+        </div>
+        <div>
+          <div id="questAge" class="font-semibold"></div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-  <div class="grid lg:grid-cols-3 gap-10 items-start">
+  <div class="grid lg:grid-cols-3 gap-6 sm:gap-10 items-start">
     <!-- ФОРМА -->
     <section class="lg:col-span-2">
-      <form id="bookingForm" class="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-slate-800 space-y-6">
-        <!-- Название квеста (из sessionStorage) -->
+      <form id="bookingForm" class="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-lg sm:shadow-xl border border-gray-200 dark:border-slate-800 space-y-6">
+        <!-- Название квеста -->
         <div>
-          <label class="block text-sm font-semibold mb-1 text-gray-800 dark:text-gray-100">Квест</label>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Квест</label>
           <div id="questName"
-               class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+               class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-base
                       dark:bg-slate-950 dark:border-slate-700 dark:text-white">
             Загрузка...
           </div>
@@ -177,16 +172,16 @@
         <!-- Дата + время -->
         <div>
           <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Дата и время</label>
-          <div class="grid md:grid-cols-2 gap-4">
+          <div class="flex flex-col sm:grid sm:grid-cols-2 gap-4">
             <!-- Календарь -->
             <div class="relative">
               <input id="dateInput" type="text" readonly
                      placeholder="Выберите дату"
-                     class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer
+                     class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer text-sm sm:text-base
                             focus:outline-none focus:ring-2 focus:ring-blue-500
                             dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
               <div id="calendarPopup"
-                   class="hidden absolute z-20 mt-2 w-72 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-3">
+                   class="hidden fixed sm:absolute z-50 mt-2 w-[calc(100vw-2rem)] sm:w-72 left-4 sm:left-auto sm:right-0 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-3">
                 <div class="flex justify-between items-center mb-2">
                   <button type="button" id="prevMonth" class="px-2 py-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">‹</button>
                   <div id="calendarTitle" class="font-semibold text-gray-800 dark:text-gray-100 text-sm"></div>
@@ -203,11 +198,12 @@
             <div class="relative">
               <input id="timeInput" type="text" readonly
                      placeholder="Выберите время"
-                     class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer
+                     class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer text-sm sm:text-base
                             focus:outline-none focus:ring-2 focus:ring-blue-500
                             dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
               <div id="timePopup"
-                   class="hidden absolute z-20 mt-2 w-40 max-h-60 overflow-y-auto bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-0">
+                   class="hidden fixed sm:absolute z-50 mt-2 w-[calc(100vw-2rem)] sm:w-40 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-0">
+                <div id="timeList" class="max-h-60 overflow-y-auto"></div>
               </div>
             </div>
           </div>
@@ -218,40 +214,40 @@
           <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Количество игроков</label>
           <div class="flex items-center gap-3">
             <button type="button" id="playersMinus"
-                    class="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-700
-                           flex items-center justify-center text-xl text-gray-700 dark:text-gray-200
-                           hover:border-blue-500 dark:hover:border-blue-400">
+                    class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-300 dark:border-slate-700
+                           flex items-center justify-center text-lg sm:text-xl text-gray-700 dark:text-gray-200
+                           hover:border-blue-500 dark:hover:border-blue-400 active:scale-95 transition">
               –
             </button>
             <input id="playersInput" type="text" readonly
                    value="4"
-                   class="flex-1 text-center p-3 rounded-xl bg-gray-50 border border-gray-300 text-xl font-semibold text-gray-900
+                   class="flex-1 text-center p-3 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-lg sm:text-xl font-semibold text-gray-900
                           dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
             <button type="button" id="playersPlus"
-                    class="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-700
-                           flex items-center justify-center text-xl text-gray-700 dark:text-gray-200
-                           hover:border-blue-500 dark:hover:border-blue-400">
+                    class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-300 dark:border-slate-700
+                           flex items-center justify-center text-lg sm:text-xl text-gray-700 dark:text-gray-200
+                           hover:border-blue-500 dark:hover:border-blue-400 active:scale-95 transition">
               +
             </button>
           </div>
           <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            Базовая цена указана за 4 игроков. Каждый дополнительный игрок +500 ₽.
+            Базовая цена за 4 игроков. Каждый дополнительный игрок +500 ₽.
           </p>
         </div>
 
         <!-- Контакты -->
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div>
             <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Имя</label>
             <input id="nameInput" type="text" placeholder="Ваше имя"
-                   class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                   class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-base
                           focus:outline-none focus:ring-2 focus:ring-blue-500
                           dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
           </div>
           <div>
             <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Телефон</label>
-            <input id="phoneInput" type="tel" placeholder="+7 (___) ___-__-__"
-                   class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+            <input id="phoneInput" type="tel" placeholder="+7 (999) 999-99-99"
+                   class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-base
                           focus:outline-none focus:ring-2 focus:ring-blue-500
                           dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
           </div>
@@ -260,7 +256,7 @@
         <div>
           <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Email</label>
           <input id="emailInput" type="email" placeholder="you@example.com"
-                 class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                 class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-base
                         focus:outline-none focus:ring-2 focus:ring-blue-500
                         dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
         </div>
@@ -268,23 +264,23 @@
         <div>
           <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Комментарий (необязательно)</label>
           <textarea id="commentInput" rows="3" placeholder="Например: День рождения, нужны ли актёры..."
-                    class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                    class="w-full p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-base
                            focus:outline-none focus:ring-2 focus:ring-blue-500
                            dark:bg-slate-950 dark:border-slate-700 dark:text-white"></textarea>
         </div>
 
         <div class="flex items-start space-x-3">
-          <input type="checkbox" required
+          <input id="agreementCheckbox" type="checkbox" required
                  class="mt-1 w-5 h-5 text-blue-600 bg-gray-50 border-gray-300 rounded focus:ring-blue-500
                         dark:bg-slate-950 dark:border-slate-700" checked />
-          <span class="text-sm text-gray-600 dark:text-gray-400">
+          <label for="agreementCheckbox" class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
             Я согласен(на) с обработкой персональных данных
-          </span>
+          </label>
         </div>
 
         <button type="submit"
-                class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg
-                       shadow-lg shadow-blue-600/40 hover:shadow-blue-600/60 transition">
+                class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg
+                       shadow-lg shadow-blue-600/40 hover:shadow-blue-600/60 transition active:scale-[0.98]">
           Забронировать квест
         </button>
       </form>
@@ -292,13 +288,13 @@
 
     <!-- БОКОВОЙ БЛОК "ИТОГО" -->
     <aside class="lg:sticky lg:top-28 space-y-4">
-      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-gray-200 dark:border-slate-800">
-        <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Итого к оплате</h2>
+      <div class="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg sm:shadow-xl border border-gray-200 dark:border-slate-800">
+        <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-900 dark:text-white">Итого к оплате</h2>
 
-        <div class="space-y-3 mb-4 text-sm">
+        <div class="space-y-3 mb-4 text-xs sm:text-sm">
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Квест</span>
-            <span id="summaryQuest" class="font-medium text-gray-900 dark:text-gray-100">—</span>
+            <span id="summaryQuest" class="font-medium text-gray-900 dark:text-gray-100 text-right max-w-[60%] truncate">—</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Дата и время</span>
@@ -310,7 +306,7 @@
           </div>
         </div>
 
-        <div class="border-t border-gray-200 dark:border-slate-800 pt-4 space-y-2 text-sm">
+        <div class="border-t border-gray-200 dark:border-slate-800 pt-4 space-y-2 text-xs sm:text-sm">
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Стоимость</span>
             <span id="basePrice" class="font-semibold text-blue-600 dark:text-blue-400">3500 ₽</span>
@@ -324,7 +320,7 @@
         <div class="border-t border-gray-200 dark:border-slate-800 mt-4 pt-4">
           <div class="flex justify-between items-center">
             <span class="text-sm text-gray-600 dark:text-gray-400">К оплате</span>
-            <span id="totalPrice" class="text-2xl font-extrabold text-blue-600 dark:text-blue-400">3500 ₽</span>
+            <span id="totalPrice" class="text-xl sm:text-2xl font-extrabold text-blue-600 dark:text-blue-400">3500 ₽</span>
           </div>
         </div>
 
@@ -336,8 +332,7 @@
   </div>
 </main>
 
-<footer class="border-t border-gray-200 dark:
-border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+<footer class="border-t border-gray-200 dark:border-slate-800 py-4 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
   © 2025 DarkRoom
 </footer>
 
@@ -350,7 +345,7 @@ border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
 
   function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-xl text-white font-semibold shadow-lg z-50 ${
+    notification.className = `fixed top-4 right-4 px-4 sm:px-6 py-3 sm:py-4 rounded-xl text-white font-semibold shadow-lg z-50 text-sm sm:text-base ${
       type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
     }`;
     notification.textContent = message;
@@ -380,178 +375,92 @@ border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
     localStorage.setItem('theme', theme);
   }
 
-  // при загрузке
   const savedTheme = localStorage.getItem('theme') || 'dark';
   applyTheme(savedTheme);
 
-  // по нажатию
   themeBtn.addEventListener('click', () => {
     const isDark = document.documentElement.classList.contains('dark');
     applyTheme(isDark ? 'light' : 'dark');
   });
 })();
 
-    // ========== БУРГЕР-МЕНЮ (ОВЕРЛЕЙ) ==========
-  (function () {
-    const burger = document.getElementById('burgerBtn');
+  // ========== БУРГЕР И МОБИЛЬНОЕ МЕНЮ (как в index.html) ==========
+  document.addEventListener('DOMContentLoaded', function() {
+    const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    const burgerClose = document.getElementById('burgerCloseBtn');
-
-    if (!burger || !mobileMenu) return;
-
-    function openMenu() {
-      mobileMenu.classList.remove('hidden');
-      // анимация иконки бургера (три полоски -> крестик)
-      const lines = burger.querySelectorAll('span');
-      if (lines.length === 3) {
-        lines[0].style.transform = 'rotate(45deg) translateY(8px)';
-        lines[1].style.opacity = '0';
-        lines[2].style.transform = 'rotate(-45deg) translateY(-8px)';
-      }
-    }
-
-    function closeMenu() {
-      mobileMenu.classList.add('hidden');
-      const lines = burger.querySelectorAll('span');
-      if (lines.length === 3) {
-        lines[0].style.transform = 'none';
-        lines[1].style.opacity = '1';
-        lines[2].style.transform = 'none';
-      }
-    }
-
-    burger.addEventListener('click', () => {
-      const isHidden = mobileMenu.classList.contains('hidden');
-      if (isHidden) openMenu(); else closeMenu();
-    });
-
-    if (burgerClose) {
-      burgerClose.addEventListener('click', closeMenu);
-    }
-
-    // закрытие по клику на любую ссылку внутри меню
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    // ===== АВТОРИЗАЦИЯ В ОВЕРЛЕЕ =====
-    const mmAuthButtons = document.getElementById('mmAuthButtons');
-    const mmUserBlock   = document.getElementById('mmUserBlock');
-    const mmUserGreeting = document.getElementById('mmUserGreeting');
-    const mmLogoutBtn   = document.getElementById('mmLogoutBtn');
-
-    function getCurrentUserBooking() {
-      const u = localStorage.getItem('currentUser');
-      return u ? JSON.parse(u) : null;
-    }
-
-    function updateOverlayAuth() {
-      if (!mmAuthButtons || !mmUserBlock) return;
-      const user = getCurrentUserBooking();
-      if (user) {
-        mmAuthButtons.classList.add('hidden');
-        mmUserBlock.classList.remove('hidden');
-        if (mmUserGreeting) mmUserGreeting.textContent = `Привет, ${user.name}!`;
-      } else {
-        mmAuthButtons.classList.remove('hidden');
-        mmUserBlock.classList.add('hidden');
-      }
-    }
-
-    if (mmLogoutBtn) {
-      mmLogoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('currentUser');
-        updateOverlayAuth();
-        // можно кинуть на главную или оставить на этой
-        window.location.href = 'index.html';
-      });
-    }
-
-    updateOverlayAuth();
-    window.addEventListener('storage', updateOverlayAuth);
-  })();
-
-  // ========== МОБИЛЬНОЕ МЕНЮ / БУРГЕР (как на index) ==========
-  document.addEventListener('DOMContentLoaded', function () {
-    const burgerBtn          = document.getElementById('burgerBtn');
-    const mobileMenu         = document.getElementById('mobileMenu');
-    const mobileAuthButtons  = document.getElementById('mobileAuthButtons');
-    const mobileUserSection  = document.getElementById('mobileUserSection');
-    const mobileUserGreeting = document.getElementById('mobileUserGreeting');
-    const mobileLoginBtn     = document.getElementById('mobileLoginBtn');
-    const mobileRegisterBtn  = document.getElementById('mobileRegisterBtn');
-    const mobileAccountBtn   = document.getElementById('mobileAccountBtn');
-
-    // Обновление блока авторизации в мобильном меню
-    function updateMobileUserUI() {
-      const currentUser = getCurrentUser(); // у тебя эта функция уже есть выше
-      if (currentUser) {
-        if (mobileUserSection)   mobileUserSection.style.display = 'flex';
-        if (mobileUserGreeting)  mobileUserGreeting.textContent = `Привет, ${currentUser.name}!`;
-        if (mobileAuthButtons)   mobileAuthButtons.style.display = 'none';
-      } else {
-        if (mobileUserSection)   mobileUserSection.style.display = 'none';
-        if (mobileAuthButtons)   mobileAuthButtons.style.display = 'flex';
-      }
-    }
-
+    const burgerSpans = burgerBtn.querySelectorAll('.burger-line');
+    
     let isMenuOpen = false;
-
-    function toggleMobileMenu() {
-      if (!mobileMenu || !burgerBtn) return;
+    
+    function toggleMenu() {
       isMenuOpen = !isMenuOpen;
-
+      
       if (isMenuOpen) {
-        mobileMenu.classList.add('show');
+        mobileMenu.classList.remove('hidden');
         burgerBtn.classList.add('active');
         document.body.style.overflow = 'hidden';
       } else {
-        mobileMenu.classList.remove('show');
+        mobileMenu.classList.add('hidden');
         burgerBtn.classList.remove('active');
         document.body.style.overflow = '';
       }
     }
-
+    
     // Клик по бургеру
-    if (burgerBtn) {
-      burgerBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        toggleMobileMenu();
+    burgerBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    
+    // Клик по ссылкам в меню
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        toggleMenu();
       });
-    }
-
-    // Клик по ссылкам внутри меню — закрыть
-    if (mobileMenu) {
-      mobileMenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', toggleMobileMenu);
-      });
-    }
-
-    // Клик снаружи — закрыть
-    document.addEventListener('click', function (e) {
-      if (
-        isMenuOpen &&
-        mobileMenu &&
-        !mobileMenu.contains(e.target) &&
-        burgerBtn &&
-        !burgerBtn.contains(e.target)
-      ) {
-        toggleMobileMenu();
+    });
+    
+    // Клик вне меню для закрытия
+    document.addEventListener('click', function(e) {
+      if (isMenuOpen && 
+          mobileMenu && 
+          !mobileMenu.contains(e.target) && 
+          burgerBtn && 
+          !burgerBtn.contains(e.target)) {
+        toggleMenu();
       }
     });
-
-    // ESC — закрыть
-    document.addEventListener('keydown', function (e) {
+    
+    // ESC для закрытия
+    document.addEventListener('keydown', function(e) {
       if (isMenuOpen && e.key === 'Escape') {
-        toggleMobileMenu();
+        toggleMenu();
       }
     });
-
+    
+    // Обновление авторизации в меню
+    function updateMobileUserUI() {
+      const currentUser = getCurrentUser();
+      const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+      const mobileUserSection = document.getElementById('mobileUserSection');
+      const mobileUserGreeting = document.getElementById('mobileUserGreeting');
+      
+      if (currentUser) {
+        if (mobileUserSection) {
+          mobileUserSection.style.display = 'flex';
+          if (mobileUserGreeting) {
+            mobileUserGreeting.textContent = `Привет, ${currentUser.name}!`;
+          }
+        }
+        if (mobileAuthButtons) mobileAuthButtons.style.display = 'none';
+      } else {
+        if (mobileUserSection) mobileUserSection.style.display = 'none';
+        if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+      }
+    }
+    
     updateMobileUserUI();
     window.addEventListener('storage', updateMobileUserUI);
   });
-
-
 
   // ========== ЗАГРУЗКА КВЕСТА ИЗ sessionStorage ==========
   let selectedQuestData = null;
@@ -571,23 +480,16 @@ border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
     selectedQuestData = JSON.parse(selectedQuestJSON);
 
     // Фото и описание
-document.getElementById('questImage').src = selectedQuestData.image;
-document.getElementById('questTitle').textContent = selectedQuestData.title;
-document.getElementById('questDescription').textContent = selectedQuestData.description;
+    document.getElementById('questImage').src = selectedQuestData.image;
+    document.getElementById('questTitle').textContent = selectedQuestData.title;
+    document.getElementById('questDescription').textContent = selectedQuestData.description;
 
-// Ограничения
-document.getElementById('questDuration').textContent = selectedQuestData.duration;
-document.getElementById('questPlayers').textContent =
-  `${selectedQuestData.playersMin}–${selectedQuestData.playersMax}`;
-document.getElementById('questAge').textContent = selectedQuestData.age;
+    // Ограничения
+    document.getElementById('questDuration').textContent = selectedQuestData.duration;
+    document.getElementById('questPlayers').textContent =
+      `${selectedQuestData.playersMin}–${selectedQuestData.playersMax}`;
+    document.getElementById('questAge').textContent = selectedQuestData.age;
 
-// Ограничиваем ввод игроков
-playersInput.value = Math.max(
-  selectedQuestData.playersMin,
-  Math.min(playersInput.value, selectedQuestData.playersMax)
-);
-
-    
     // Отображаем название квеста
     document.getElementById('questName').textContent = selectedQuestData.title;
     document.getElementById('summaryQuest').textContent = selectedQuestData.title;
@@ -596,6 +498,13 @@ playersInput.value = Math.max(
     const basePrice = selectedQuestData.basePrice || 3500;
     document.getElementById('basePrice').textContent = basePrice.toLocaleString('ru-RU') + ' ₽';
     document.getElementById('totalPrice').textContent = basePrice.toLocaleString('ru-RU') + ' ₽';
+
+    // Ограничиваем ввод игроков
+    const playersInput = document.getElementById('playersInput');
+    playersInput.value = Math.max(
+      selectedQuestData.playersMin,
+      Math.min(playersInput.value, selectedQuestData.playersMax)
+    );
 
     // Инициализируем календарь и время
     renderCalendar(new Date());
@@ -608,6 +517,8 @@ playersInput.value = Math.max(
       document.getElementById('phoneInput').value = currentUser.phone || '';
       document.getElementById('emailInput').value = currentUser.email || '';
     }
+    
+    updatePrice();
   });
 
   // ========== ЦЕНА И ИГРОКИ ==========
@@ -624,7 +535,9 @@ playersInput.value = Math.max(
   function updatePrice() {
     let players = parseInt(playersInput.value, 10) || 4;
     if (players < 2) players = 2;
-    if (players > 12) players = 12;
+    if (selectedQuestData && players > selectedQuestData.playersMax) {
+      players = selectedQuestData.playersMax;
+    }
     playersInput.value = players;
 
     const basePrice = selectedQuestData ? selectedQuestData.basePrice : BASE_PRICE;
@@ -643,12 +556,20 @@ playersInput.value = Math.max(
   if (playersMinus && playersPlus && playersInput) {
     playersMinus.addEventListener('click', (e) => {
       e.preventDefault();
-      playersInput.value = (parseInt(playersInput.value, 10) || 4) - 1;
+      let newValue = (parseInt(playersInput.value, 10) || 4) - 1;
+      if (selectedQuestData && newValue < selectedQuestData.playersMin) {
+        newValue = selectedQuestData.playersMin;
+      }
+      playersInput.value = newValue;
       updatePrice();
     });
     playersPlus.addEventListener('click', (e) => {
       e.preventDefault();
-      playersInput.value = (parseInt(playersInput.value, 10) || 4) + 1;
+      let newValue = (parseInt(playersInput.value, 10) || 4) + 1;
+      if (selectedQuestData && newValue > selectedQuestData.playersMax) {
+        newValue = selectedQuestData.playersMax;
+      }
+      playersInput.value = newValue;
       updatePrice();
     });
   }
@@ -696,15 +617,15 @@ playersInput.value = Math.max(
       // Отключаем прошлые даты
       if (cellDate < today) {
         btn.disabled = true;
-        btn.className = 'w-8 h-8 rounded-full text-sm text-gray-300 dark:text-gray-600 cursor-not-allowed';
+        btn.className = 'w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm text-gray-300 dark:text-gray-600 cursor-not-allowed';
       } else {
-        btn.className = 'w-8 h-8 rounded-full text-sm flex items-center justify-center ' +
-          'hover:bg-blue-100 hover:text-blue-700 dark:hover:bg-slate-700 dark:hover:text-white cursor-pointer';
+        btn.className = 'w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm flex items-center justify-center ' +
+          'hover:bg-blue-100 hover:text-blue-700 dark:hover:bg-slate-700 dark:hover:text-white cursor-pointer active:scale-95 transition';
         
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           dateInput.value = cellDate.toLocaleDateString('ru-RU');
-          calendarPopup.classList.add('hidden');
+          closeAllPopups();
           updateSummaryDateTime();
         });
       }
@@ -719,8 +640,16 @@ playersInput.value = Math.max(
     summaryDateTime.textContent = timeText ? `${dateText} • ${timeText}` : dateText;
   }
 
+  // Функция закрытия всех попапов
+  function closeAllPopups() {
+    if (calendarPopup) calendarPopup.classList.add('hidden');
+    if (timePopup) timePopup.classList.add('hidden');
+  }
+
   if (dateInput && calendarPopup) {
-    dateInput.addEventListener('click', () => {
+    dateInput.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeAllPopups();
       calendarPopup.classList.toggle('hidden');
     });
 
@@ -735,56 +664,105 @@ playersInput.value = Math.max(
       currentDate.setMonth(currentDate.getMonth() + 1);
       renderCalendar(currentDate);
     });
-
-    document.addEventListener('click', (e) => {
-      if (!calendarPopup.contains(e.target) && e.target !== dateInput) {
-        calendarPopup.classList.add('hidden');
-      }
-    });
   }
 
   // ========== ВРЕМЯ ==========
   const timeInput = document.getElementById('timeInput');
   const timePopup = document.getElementById('timePopup');
+  const timeList = document.getElementById('timeList');
 
   function generateTimeSlots() {
-    timePopup.innerHTML = '';
+    if (!timeList) return;
+    
+    timeList.innerHTML = '';
     const ul = document.createElement('ul');
     ul.className = 'w-full divide-y divide-gray-100 dark:divide-slate-800';
 
-    for (let h = 10; h <= 22; h++) {
-      for (let m of [0, 30]) {
-        const label = `${String(h).padStart(2, '0')}:${m === 0 ? '00' : '30'}`;
-        const li = document.createElement('li');
-        li.className = 'px-3 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 cursor-pointer text-sm';
-        li.textContent = label;
-        li.dataset.time = label;
-        
-        li.addEventListener('click', (e) => {
-          e.preventDefault();
-          timeInput.value = label;
-          timePopup.classList.add('hidden');
-          updateSummaryDateTime();
-        });
+    // Создаем список времен
+    const times = [
+      '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
+      '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+      '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
+      '20:00', '20:30', '21:00', '21:30', '22:00'
+    ];
 
-        ul.appendChild(li);
-      }
-    }
+    times.forEach(time => {
+      const li = document.createElement('li');
+      li.className = 'px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 cursor-pointer text-sm active:bg-blue-100 border-b border-gray-100 dark:border-slate-700 last:border-b-0';
+      li.textContent = time;
+      li.dataset.time = time;
+      
+      li.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        timeInput.value = time;
+        closeAllPopups();
+        updateSummaryDateTime();
+      });
 
-    timePopup.appendChild(ul);
+      ul.appendChild(li);
+    });
+
+    timeList.appendChild(ul);
   }
 
   if (timeInput && timePopup) {
-    timeInput.addEventListener('click', () => {
+    timeInput.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeAllPopups();
       timePopup.classList.toggle('hidden');
     });
-
-    document.addEventListener('click', (e) => {
-      if (!timePopup.contains(e.target) && e.target !== timeInput) {
-        timePopup.classList.add('hidden');
-      }
-    });
   }
+
+  // Закрытие попапов при клике вне
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#dateInput') && !e.target.closest('#calendarPopup')) {
+      closeAllPopups();
+    }
+    if (!e.target.closest('#timeInput') && !e.target.closest('#timePopup')) {
+      closeAllPopups();
+    }
+  });
+
+  // Закрытие на мобильных при скролле
+  window.addEventListener('scroll', () => {
+    closeAllPopups();
+  });
+
+  // ========== ЧЕКБОКС С СОГЛАСИЕМ ==========
+  document.addEventListener('DOMContentLoaded', () => {
+    const agreementLabel = document.querySelector('label[for="agreementCheckbox"]');
+    const agreementCheckbox = document.getElementById('agreementCheckbox');
+    
+    if (agreementLabel && agreementCheckbox) {
+      // Делаем кликабельной всю метку
+      agreementLabel.addEventListener('click', (e) => {
+        // Предотвращаем двойной переключение
+        if (e.target !== agreementCheckbox) {
+          agreementCheckbox.checked = !agreementCheckbox.checked;
+          // Имитируем событие change для валидации формы
+          agreementCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      
+      // Добавляем визуальную обратную связь
+      agreementLabel.addEventListener('mousedown', () => {
+        agreementLabel.classList.add('opacity-70');
+      });
+      
+      agreementLabel.addEventListener('mouseup', () => {
+        agreementLabel.classList.remove('opacity-70');
+      });
+      
+      agreementLabel.addEventListener('touchstart', () => {
+        agreementLabel.classList.add('opacity-70');
+      });
+      
+      agreementLabel.addEventListener('touchend', () => {
+        agreementLabel.classList.remove('opacity-70');
+      });
+    }
+  });
 
   // ========== ОТПРАВКА ФОРМЫ ==========
   const bookingForm = document.getElementById('bookingForm');
@@ -811,12 +789,26 @@ playersInput.value = Math.max(
         return;
       }
 
-      const nameValue = document.getElementById('nameInput').value;
-      const phoneValue = document.getElementById('phoneInput').value;
-      const emailValue = document.getElementById('emailInput').value;
+      const nameValue = document.getElementById('nameInput').value.trim();
+      const phoneValue = document.getElementById('phoneInput').value.trim();
+      const emailValue = document.getElementById('emailInput').value.trim();
 
       if (!nameValue || !phoneValue || !emailValue) {
         showNotification('Заполните все обязательные поля', 'error');
+        return;
+      }
+
+      // Простая валидация email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailValue)) {
+        showNotification('Введите корректный email', 'error');
+        return;
+      }
+
+      // Проверка согласия
+      const agreementCheckbox = document.getElementById('agreementCheckbox');
+      if (!agreementCheckbox || !agreementCheckbox.checked) {
+        showNotification('Необходимо согласие на обработку данных', 'error');
         return;
       }
 
@@ -833,7 +825,7 @@ playersInput.value = Math.max(
         name: nameValue,
         phone: phoneValue,
         email: emailValue,
-        comment: document.getElementById('commentInput').value,
+        comment: document.getElementById('commentInput').value.trim(),
         status: 'confirmed',
         bookedAt: new Date().toISOString()
       };
@@ -856,12 +848,6 @@ playersInput.value = Math.max(
       }, 1500);
     });
   }
-
-  
-
-
-  // Инициализация при загрузке
-  updatePrice();
 </script>
 
 <style>
@@ -876,39 +862,119 @@ playersInput.value = Math.max(
     }
   }
 
-  .burger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.3s ease;
-}
+  /* Ограничение текста в 3 строки */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Улучшение для чекбокса */
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
+  
+  /* Улучшение скролла для попапов */
+  #timeList::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #timeList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  #timeList::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+  
+  #timeList::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .dark #timeList::-webkit-scrollbar-track {
+    background: #334155;
+  }
+  
+  .dark #timeList::-webkit-scrollbar-thumb {
+    background: #64748b;
+  }
+  
+  .dark #timeList::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
 
-.burger-line {
-  display: block;
-  height: 3px;
-  width: 100%;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
+  /* Улучшение для мобильных */
+  @media (max-width: 640px) {
+    input, textarea, select, button {
+      font-size: 16px !important; /* Предотвращает масштабирование в iOS */
+    }
+    
+    #calendarPopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100vw - 32px);
+      max-width: 320px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    #timePopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100vw - 32px);
+      max-width: 200px;
+      max-height: 70vh;
+    }
+    
+    #timeList {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  }
 
-/* ... */
-@media (max-width: 767px) {
+  /* Стили бургера как в index.html */
   .burger {
-    display: flex;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 767px) {
+    .burger {
+      display: flex;
+    }
+  }
+
+  .burger-line {
+    display: block;
+    height: 3px;
+    width: 100%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
   }
 
   .burger.active .top-line {
     transform: rotate(45deg) translate(6px, 6px);
   }
+
   .burger.active .mid-line {
     opacity: 0;
   }
+
   .burger.active .bottom-line {
     transform: rotate(-45deg) translate(6px, -6px);
   }
@@ -920,15 +986,11 @@ playersInput.value = Math.max(
     visibility: hidden;
   }
 
-  #mobileMenu.show {
-    display: flex !important;
+  #mobileMenu:not(.hidden) {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-}
-
 </style>
-
 </body>
 </html>
