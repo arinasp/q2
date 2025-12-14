@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DarkRoom — квесты в Чебоксарах</title>
-  
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marmelad&display=swap" rel="stylesheet">
@@ -142,42 +142,59 @@
 
 
 <!-- HERO ВО ВСЮ ШИРИНУ -->
-<section id="heroSection"
-  class="relative h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden"
-  style="background-image: url('./img/b.jpg');">
-
+<section
+  id="heroSection"
+  class="relative w-full bg-cover bg-center bg-no-repeat overflow-hidden"
+  style="background-image: url('./img/b.jpg');"
+>
   <!-- ГРАДИЕНТ -->
-  <div class="absolute inset-0"
-    style="background: linear-gradient(to right, 
-      rgba(0, 0, 0, 0.95) 0%, 
-      rgba(0, 0, 0, 0.85) 20%, 
-      rgba(0, 0, 0, 0.7) 40%, 
-      rgba(0, 0, 0, 0.5) 60%, 
-      rgba(0, 0, 0, 0.3) 80%, 
-      rgba(0, 0, 0, 0) 100%);">
-  </div>
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.85) 20%,
+      rgba(0, 0, 0, 0.7) 40%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0.3) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );"
+  ></div>
 
   <!-- КОНТЕНТ ПО ЦЕНТРУ -->
-  <div class="relative h-full max-w-7xl mx-auto px-8 flex flex-col justify-center items-start">
-    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white">
-      DarkRoom — ОСТРЫЕ<br />
-      ВПЕЧАТЛЕНИЯ И<br />
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-        НЕЗАБЫВАЕМЫЕ ЭМОЦИИ
-      </span>
-    </h1>
+  <div
+    class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 flex items-center"
+  >
+    <div class="max-w-2xl">
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight text-white"
+      >
+        DarkRoom — ОСТРЫЕ<br />
+        ВПЕЧАТЛЕНИЯ И<br />
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400"
+        >
+          НЕЗАБЫВАЕМЫЕ ЭМОЦИИ
+        </span>
+      </h1>
 
-    <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-2xl">
-      Уникальные квесты с оригинальными сценариями в Чебоксарах
-    </p>
+      <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 sm:mb-10">
+        Уникальные квесты с оригинальными сценариями в Чебоксарах
+      </p>
 
-    <div class="flex flex-col sm:flex-row gap-4">
-      <button class="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-bold text-lg">
-        ВЫБРАТЬ КВЕСТ
-      </button>
-      <button class="px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg">
-        Связаться
-      </button>
+     
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button
+          class="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition transform"
+        >
+          ВЫБРАТЬ КВЕСТ
+        </button>
+        <button
+          class="px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-black transition"
+        >
+          Связаться
+        </button>
+      </div>
     </div>
   </div>
 </section>
