@@ -26,33 +26,95 @@
 
 <body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
 
-  <header class="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur border-b border-gray-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <a href="index.html" class="text-2xl font-extrabold uppercase tracking-widest">
-        Dark<span class="text-blue-500">Room</span>
+ <header class="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur border-b border-gray-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <a href="index.html" class="text-2xl font-extrabold uppercase tracking-widest">
+      Dark<span class="text-blue-500">Room</span>
+    </a>
+
+    <!-- ДЕСКТОП-МЕНЮ -->
+    <nav class="hidden md:flex space-x-6 text-gray-600 dark:text-gray-400">
+      <a href="index.html" class="hover:text-blue-600 dark:hover:text-white font-semibold">Квесты</a>
+      <a href="booking.html" class="hover:text-blue-600 dark:hover:text-white">Бронирование</a>
+    </nav>
+
+    <div class="flex items-center space-x-3">
+      <!-- КНОПКА ТЕМЫ (та же, что была) -->
+      <button id="themeToggle"
+              class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-slate-700
+                     bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-200 hover:border-blue-500 dark:hover:border-blue-400
+                     transition"
+              aria-label="Переключить тему">
+        <span id="themeIcon">☾</span>
+      </button>
+
+      <!-- ПРИВЕТСТВИЕ ДЕСКТОП -->
+      <span class="hidden sm:inline text-gray-600 dark:text-gray-300 font-medium">
+        Привет, <span id="userDisplayName">Арина</span>
+      </span>
+
+      <!-- ВЫЙТИ (десктоп) -->
+      <a href="login.html"
+         class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+        Выйти
       </a>
 
-      <nav class="hidden md:flex space-x-6 text-gray-600 dark:text-gray-400">
-        <a href="index.html" class="hover:text-blue-600 dark:hover:text-white font-semibold">Квесты</a>
-        <a href="booking.html" class="hover:text-blue-600 dark:hover:text-white">Бронирование</a>
+      <!-- БУРГЕР (мобилка) -->
+      <button id="burgerBtn" class="burger md:hidden flex flex-col justify-center items-center w-10 h-10 relative">
+        <span class="burger-line top-line bg-gray-700 dark:bg-gray-300"></span>
+        <span class="burger-line mid-line bg-gray-700 dark:bg-gray-300"></span>
+        <span class="burger-line bottom-line bg-gray-700 dark:bg-gray-300"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div id="mobileMenu"
+       class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
+    <div class="px-6 py-4">
+      <nav class="flex flex-col space-y-4">
+        <a href="index.html"
+           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-semibold py-2 transition-colors">
+          Квесты
+        </a>
+        <a href="booking.html"
+           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">
+          Бронирование
+        </a>
       </nav>
 
-      <div class="flex items-center space-x-3">
-        <button id="themeToggle"
-                class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-slate-700
-                       bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-200 hover:border-blue-500 dark:hover:border-blue-400
-                       transition"
-                aria-label="Переключить тему">
-          <span id="themeIcon">☾</span>
-        </button>
+      <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-800">
+        <!-- НЕ авторизован (на всякий случай) -->
+        <div id="mobileAuthButtons" class="flex flex-col space-y-3">
+          <a id="mobileLoginBtn" href="login.html"
+             class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+            Войти
+          </a>
+          <a id="mobileRegisterBtn" href="register.html"
+             class="text-center py-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white transition-colors">
+            Регистрация
+          </a>
+        </div>
 
-        <span class="hidden sm:inline text-gray-600 dark:text-gray-300 font-medium">Привет, <span id="userDisplayName">Арина</span></span>
-        <a href="login.html" class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
-          Выйти
-        </a>
+        <!-- Авторизован -->
+        <div id="mobileUserSection" class="hidden flex-col space-y-3">
+          <div class="text-center py-3 text-gray-600 dark:text-gray-300 font-medium">
+            <span id="mobileUserGreeting"></span>
+          </div>
+          <a id="mobileAccountBtn" href="account.html"
+             class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+            Личный кабинет
+          </a>
+          <button id="mobileLogoutBtn"
+             class="text-center py-3 border border-red-600 rounded-lg text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+            Выйти
+          </button>
+        </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
+
 
   <main class="max-w-7xl mx-auto px-4 py-10">
     <div class="grid lg:grid-cols-12 gap-8">
@@ -325,6 +387,100 @@
     });
   }
 
+    // ========== БУРГЕР / МОБИЛЬНОЕ МЕНЮ ==========
+  document.addEventListener('DOMContentLoaded', function () {
+    const burgerBtn          = document.getElementById('burgerBtn');
+    const mobileMenu         = document.getElementById('mobileMenu');
+    const mobileAuthButtons  = document.getElementById('mobileAuthButtons');
+    const mobileUserSection  = document.getElementById('mobileUserSection');
+    const mobileUserGreeting = document.getElementById('mobileUserGreeting');
+    const mobileLoginBtn     = document.getElementById('mobileLoginBtn');
+    const mobileRegisterBtn  = document.getElementById('mobileRegisterBtn');
+    const mobileAccountBtn   = document.getElementById('mobileAccountBtn');
+    const mobileLogoutBtn    = document.getElementById('mobileLogoutBtn');
+
+    // Обновляем блок авторизации в мобильном меню
+    function updateMobileUserUI() {
+      const currentUser = getCurrentUser(); // твоя функция выше
+      if (!mobileAuthButtons || !mobileUserSection) return;
+
+      if (currentUser) {
+        mobileAuthButtons.style.display = 'none';
+        mobileUserSection.style.display = 'flex';
+        if (mobileUserGreeting) {
+          mobileUserGreeting.textContent = `Привет, ${currentUser.name}!`;
+        }
+      } else {
+        mobileAuthButtons.style.display = 'flex';
+        mobileUserSection.style.display = 'none';
+      }
+    }
+
+    let isMenuOpen = false;
+
+    function toggleMobileMenu() {
+      if (!mobileMenu || !burgerBtn) return;
+      isMenuOpen = !isMenuOpen;
+
+      if (isMenuOpen) {
+        mobileMenu.classList.add('show');
+        burgerBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.remove('show');
+        burgerBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (burgerBtn) {
+      burgerBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleMobileMenu();
+      });
+    }
+
+    if (mobileMenu) {
+      // закрывать при клике на ссылки
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', toggleMobileMenu);
+      });
+    }
+
+    // закрыть по клику вне
+    document.addEventListener('click', function (e) {
+      if (
+        isMenuOpen &&
+        mobileMenu &&
+        !mobileMenu.contains(e.target) &&
+        burgerBtn &&
+        !burgerBtn.contains(e.target)
+      ) {
+        toggleMobileMenu();
+      }
+    });
+
+    // закрыть по ESC
+    document.addEventListener('keydown', function (e) {
+      if (isMenuOpen && e.key === 'Escape') {
+        toggleMobileMenu();
+      }
+    });
+
+    // Логаут с мобильной кнопки
+    if (mobileLogoutBtn) {
+      mobileLogoutBtn.addEventListener('click', function () {
+        localStorage.removeItem('currentUser');
+        updateMobileUserUI();
+        window.location.href = 'login.html';
+      });
+    }
+
+    updateMobileUserUI();
+    window.addEventListener('storage', updateMobileUserUI);
+  });
+
+
   // ========== ПОКАЗАТЬ СЕКЦИЮ ==========
   function showSection(section) {
     document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = 'none');
@@ -363,6 +519,59 @@
         transform: translateX(400px);
       }
     }
+
+
+    .burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.burger-line {
+  display: block;
+  height: 3px;
+  width: 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .burger {
+    display: flex;
+  }
+
+  .burger.active .top-line {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  .burger.active .mid-line {
+    opacity: 0;
+  }
+  .burger.active .bottom-line {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  #mobileMenu {
+    transition: all 0.3s ease;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  #mobileMenu.show {
+    display: flex !important;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
   </style>
 
 </body>

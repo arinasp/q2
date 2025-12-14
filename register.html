@@ -33,7 +33,14 @@
       Dark<span class="text-blue-500">Room</span>
     </a>
 
+    <!-- ДЕСКТОП-МЕНЮ -->
+    <nav class="hidden md:flex space-x-6 text-gray-700 dark:text-gray-300">
+      <a href="index.html" class="hover:text-blue-600 dark:hover:text-white font-semibold">Квесты</a>
+      <a href="booking.html" class="hover:text-blue-600 dark:hover:text-white">Бронирование</a>
+    </nav>
+
     <div class="flex items-center space-x-3">
+      <!-- КНОПКА ТЕМЫ (как была, тему не ломаем) -->
       <button id="themeToggle"
               class="w-10 h-10 flex items-center justify-center rounded-full
                      border border-gray-300 dark:border-slate-700
@@ -45,12 +52,52 @@
         <span id="themeIcon">☾</span>
       </button>
 
-      <a href="index.html" class="px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+      <!-- На главную (десктоп) -->
+      <a href="index.html"
+         class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
         На главную
       </a>
+
+      <!-- БУРГЕР (мобилка) -->
+      <button id="burgerBtn" class="burger md:hidden flex flex-col justify-center items-center w-10 h-10 relative">
+        <span class="burger-line top-line bg-gray-700 dark:bg-gray-300"></span>
+        <span class="burger-line mid-line bg-gray-700 dark:bg-gray-300"></span>
+        <span class="burger-line bottom-line bg-gray-700 dark:bg-gray-300"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div id="mobileMenu"
+       class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
+    <div class="px-6 py-4">
+      <nav class="flex flex-col space-y-4">
+        <a href="index.html"
+           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-semibold py-2 transition-colors">
+          Квесты
+        </a>
+        <a href="booking.html"
+           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">
+          Бронирование
+        </a>
+        <a href="login.html"
+           class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">
+          Войти
+        </a>
+      </nav>
+
+      <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-800">
+        <div class="flex flex-col space-y-3">
+          <a href="index.html"
+             class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+            На главную
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </header>
+
 
 <main class="flex-grow flex items-center justify-center py-12">
   <div class="max-w-md w-full mx-4">
@@ -152,7 +199,113 @@
       applyTheme(next);
     });
   }
+
+  // ========== БУРГЕР / МОБИЛЬНОЕ МЕНЮ ==========
+  document.addEventListener('DOMContentLoaded', function () {
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (!burgerBtn || !mobileMenu) return;
+
+    let isMenuOpen = false;
+
+    function toggleMobileMenu() {
+      isMenuOpen = !isMenuOpen;
+
+      if (isMenuOpen) {
+        mobileMenu.classList.add('show');
+        burgerBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.remove('show');
+        burgerBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    burgerBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+
+    // Закрытие при клике по ссылке в меню
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', toggleMobileMenu);
+    });
+
+    // Закрытие по клику вне меню
+    document.addEventListener('click', function (e) {
+      if (
+        isMenuOpen &&
+        !mobileMenu.contains(e.target) &&
+        !burgerBtn.contains(e.target)
+      ) {
+        toggleMobileMenu();
+      }
+    });
+
+    // Закрытие по ESC
+    document.addEventListener('keydown', function (e) {
+      if (isMenuOpen && e.key === 'Escape') {
+        toggleMobileMenu();
+      }
+    });
+  });
 </script>
+<style>
+  .burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .burger-line {
+    display: block;
+    height: 3px;
+    width: 100%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 767px) {
+    .burger {
+      display: flex;
+    }
+
+    .burger.active .top-line {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .burger.active .mid-line {
+      opacity: 0;
+    }
+    .burger.active .bottom-line {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    #mobileMenu {
+      transition: all 0.3s ease;
+      transform: translateY(-10px);
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #mobileMenu.show {
+      display: flex !important;
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+</style>
+
+
 </body>
 </html>
 
