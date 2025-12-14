@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация — DarkRoom</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marmelad&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      fontFamily: {
+        sans: ['Marmelad', 'sans-serif']
+      }
+    }
+  };
+</script>
+
+</head>
+<body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-black/80 backdrop-blur border-b border-gray-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <a href="index.html" class="text-2xl font-extrabold uppercase tracking-widest">
+      Dark<span class="text-blue-500">Room</span>
+    </a>
+
+    <div class="flex items-center space-x-3">
+      <button id="themeToggle"
+              class="w-10 h-10 flex items-center justify-center rounded-full
+                     border border-gray-300 dark:border-slate-700
+                     bg-white dark:bg-slate-900
+                     text-gray-700 dark:text-gray-200
+                     hover:border-blue-500 dark:hover:border-blue-400
+                     transition"
+              aria-label="Переключить тему">
+        <span id="themeIcon">☾</span>
+      </button>
+
+      <a href="index.html" class="px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+        На главную
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="flex-grow flex items-center justify-center py-12">
+  <div class="max-w-md w-full mx-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-200 dark:border-slate-800 shadow-xl">
+      <h1 class="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white">Регистрация</h1>
+      <p class="text-center text-gray-600 dark:text-gray-400 mb-6 text-sm">
+        Получите 3000 ₽ бонусами за регистрацию!
+      </p>
+
+      <form class="space-y-5">
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Имя</label>
+          <input type="text" placeholder="Как к вам обращаться"
+                 class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Телефон</label>
+          <input type="tel" placeholder="+7 (___) ___-__-__"
+                 class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Email</label>
+          <input type="email" placeholder="you@example.com"
+                 class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Пароль</label>
+          <input type="password" placeholder="Минимум 8 символов"
+                 class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Повторите пароль</label>
+          <input type="password" placeholder="Повторите пароль"
+                 class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        </div>
+
+        <div class="flex items-start space-x-3">
+          <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 bg-gray-50 border-gray-300 rounded focus:ring-blue-500 dark:bg-slate-950 dark:border-slate-700" checked />
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            Я принимаю условия пользовательского соглашения и согласен(на) на обработку персональных данных.
+          </span>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg
+                       shadow-lg shadow-blue-600/40 hover:shadow-blue-600/60 transition">
+          Создать аккаунт
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-gray-600 dark:text-gray-400 text-sm">
+        Уже есть аккаунт?
+        <a href="login.html" class="text-blue-500 font-semibold hover:text-blue-400 transition">Войти</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-gray-200 dark:border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+  © 2025 DarkRoom
+</footer>
+
+<script>
+  const themeBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+      themeIcon.textContent = '☾';
+    } else {
+      document.documentElement.classList.add('dark');
+      themeIcon.textContent = '☼';
+    }
+  }
+
+  const initialTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(initialTheme);
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+  }
+</script>
+</body>
+</html>
+

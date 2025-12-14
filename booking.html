@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Бронирование — DarkRoom</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marmelad&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      fontFamily: {
+        sans: ['Marmelad', 'sans-serif']
+      }
+    }
+  };
+</script>
+
+</head>
+<body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
+
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-black/80 backdrop-blur border-b border-gray-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <div class="text-2xl font-extrabold uppercase tracking-widest">
+      Dark<span class="text-blue-500">Room</span>
+    </div>
+
+    <nav class="hidden md:flex space-x-6 text-gray-700 dark:text-gray-300">
+      <a href="index.html" class="hover:text-blue-600 dark:hover:text-white font-semibold">Квесты</a>
+      <a href="booking.html" class="text-blue-600 dark:text-blue-400 font-semibold">Бронирование</a>
+    </nav>
+
+    <div class="flex items-center space-x-3">
+      <button id="themeToggle"
+              class="w-10 h-10 flex items-center justify-center rounded-full
+                     border border-gray-300 dark:border-slate-700
+                     bg-white dark:bg-slate-900
+                     text-gray-700 dark:text-gray-200
+                     hover:border-blue-500 dark:hover:border-blue-400
+                     transition"
+              aria-label="Переключить тему">
+        <span id="themeIcon">☾</span>
+      </button>
+
+      <a href="account.html"
+         class="hidden sm:inline-block px-4 py-2 border border-blue-600 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition">
+        Личный кабинет
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-10">
+  <h1 class="text-3xl md:text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">
+    Бронирование квеста
+  </h1>
+  <!-- Информация о квесте -->
+<section id="questInfo"
+  class="mb-10 bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
+
+  <img id="questImage"
+       class="w-full h-64 object-cover"
+       alt="Квест">
+
+  <div class="p-6 space-y-3">
+    <h2 id="questTitle" class="text-2xl font-extrabold"></h2>
+
+    <p id="questDescription"
+       class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
+
+    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200 dark:border-slate-700 text-center text-sm">
+      <div>
+        
+        <div id="questDuration" class="font-semibold"></div>
+      </div>
+      <div>
+        
+        <div id="questPlayers" class="font-semibold"></div>
+      </div>
+      <div>
+        
+        <div id="questAge" class="font-semibold"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <div class="grid lg:grid-cols-3 gap-10 items-start">
+    <!-- ФОРМА -->
+    <section class="lg:col-span-2">
+      <form id="bookingForm" class="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-slate-800 space-y-6">
+        <!-- Название квеста (из sessionStorage) -->
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-gray-800 dark:text-gray-100">Квест</label>
+          <div id="questName"
+               class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                      dark:bg-slate-950 dark:border-slate-700 dark:text-white">
+            Загрузка...
+          </div>
+        </div>
+
+        <!-- Дата + время -->
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Дата и время</label>
+          <div class="grid md:grid-cols-2 gap-4">
+            <!-- Календарь -->
+            <div class="relative">
+              <input id="dateInput" type="text" readonly
+                     placeholder="Выберите дату"
+                     class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer
+                            focus:outline-none focus:ring-2 focus:ring-blue-500
+                            dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+              <div id="calendarPopup"
+                   class="hidden absolute z-20 mt-2 w-72 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-3">
+                <div class="flex justify-between items-center mb-2">
+                  <button type="button" id="prevMonth" class="px-2 py-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">‹</button>
+                  <div id="calendarTitle" class="font-semibold text-gray-800 dark:text-gray-100 text-sm"></div>
+                  <button type="button" id="nextMonth" class="px-2 py-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">›</button>
+                </div>
+                <div class="grid grid-cols-7 text-xs text-center text-gray-500 dark:text-gray-400 mb-1">
+                  <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span class="text-blue-600">Сб</span><span class="text-blue-600">Вс</span>
+                </div>
+                <div id="calendarDays" class="grid grid-cols-7 gap-1 text-sm"></div>
+              </div>
+            </div>
+
+            <!-- Время -->
+            <div class="relative">
+              <input id="timeInput" type="text" readonly
+                     placeholder="Выберите время"
+                     class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 cursor-pointer
+                            focus:outline-none focus:ring-2 focus:ring-blue-500
+                            dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+              <div id="timePopup"
+                   class="hidden absolute z-20 mt-2 w-40 max-h-60 overflow-y-auto bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg p-0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Количество игроков -->
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Количество игроков</label>
+          <div class="flex items-center gap-3">
+            <button type="button" id="playersMinus"
+                    class="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-700
+                           flex items-center justify-center text-xl text-gray-700 dark:text-gray-200
+                           hover:border-blue-500 dark:hover:border-blue-400">
+              –
+            </button>
+            <input id="playersInput" type="text" readonly
+                   value="4"
+                   class="flex-1 text-center p-3 rounded-xl bg-gray-50 border border-gray-300 text-xl font-semibold text-gray-900
+                          dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+            <button type="button" id="playersPlus"
+                    class="w-10 h-10 rounded-full border border-gray-300 dark:border-slate-700
+                           flex items-center justify-center text-xl text-gray-700 dark:text-gray-200
+                           hover:border-blue-500 dark:hover:border-blue-400">
+              +
+            </button>
+          </div>
+          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            Базовая цена указана за 4 игроков. Каждый дополнительный игрок +500 ₽.
+          </p>
+        </div>
+
+        <!-- Контакты -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Имя</label>
+            <input id="nameInput" type="text" placeholder="Ваше имя"
+                   class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                          focus:outline-none focus:ring-2 focus:ring-blue-500
+                          dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Телефон</label>
+            <input id="phoneInput" type="tel" placeholder="+7 (___) ___-__-__"
+                   class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                          focus:outline-none focus:ring-2 focus:ring-blue-500
+                          dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Email</label>
+          <input id="emailInput" type="email" placeholder="you@example.com"
+                 class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                        focus:outline-none focus:ring-2 focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700 dark:text-white" required />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Комментарий (необязательно)</label>
+          <textarea id="commentInput" rows="3" placeholder="Например: День рождения, нужны ли актёры..."
+                    class="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-900
+                           focus:outline-none focus:ring-2 focus:ring-blue-500
+                           dark:bg-slate-950 dark:border-slate-700 dark:text-white"></textarea>
+        </div>
+
+        <div class="flex items-start space-x-3">
+          <input type="checkbox" required
+                 class="mt-1 w-5 h-5 text-blue-600 bg-gray-50 border-gray-300 rounded focus:ring-blue-500
+                        dark:bg-slate-950 dark:border-slate-700" checked />
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            Я согласен(на) с обработкой персональных данных
+          </span>
+        </div>
+
+        <button type="submit"
+                class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg
+                       shadow-lg shadow-blue-600/40 hover:shadow-blue-600/60 transition">
+          Забронировать квест
+        </button>
+      </form>
+    </section>
+
+    <!-- БОКОВОЙ БЛОК "ИТОГО" -->
+    <aside class="lg:sticky lg:top-28 space-y-4">
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-gray-200 dark:border-slate-800">
+        <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Итого к оплате</h2>
+
+        <div class="space-y-3 mb-4 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">Квест</span>
+            <span id="summaryQuest" class="font-medium text-gray-900 dark:text-gray-100">—</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">Дата и время</span>
+            <span id="summaryDateTime" class="font-medium text-gray-900 dark:text-gray-100">—</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">Игроки</span>
+            <span id="summaryPlayers" class="font-medium text-gray-900 dark:text-gray-100">4 игрока</span>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-200 dark:border-slate-800 pt-4 space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">Стоимость</span>
+            <span id="basePrice" class="font-semibold text-blue-600 dark:text-blue-400">3500 ₽</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600 dark:text-gray-400">Доп. игроки</span>
+            <span id="extraPrice" class="text-gray-900 dark:text-gray-100">0 ₽</span>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-200 dark:border-slate-800 mt-4 pt-4">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-gray-600 dark:text-gray-400">К оплате</span>
+            <span id="totalPrice" class="text-2xl font-extrabold text-blue-600 dark:text-blue-400">3500 ₽</span>
+          </div>
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500 dark:text-gray-400">
+          Оплата возможна на месте или онлайн после подтверждения.
+        </p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="border-t border-gray-200 dark:
+border-slate-800 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+  © 2025 DarkRoom
+</footer>
+
+<script>
+  // ========== УТИЛИТЫ ==========
+  function getCurrentUser() {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+
+  function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-xl text-white font-semibold shadow-lg z-50 ${
+      type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
+    }`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-out';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // ========== ТЕМА ==========
+  const themeBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+      themeIcon.textContent = '☾';
+    } else {
+      document.documentElement.classList.add('dark');
+      themeIcon.textContent = '☼';
+    }
+  }
+
+  const initialTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(initialTheme);
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+  }
+
+  // ========== ЗАГРУЗКА КВЕСТА ИЗ sessionStorage ==========
+  let selectedQuestData = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const selectedQuestJSON = sessionStorage.getItem('selectedQuest');
+    
+    if (!selectedQuestJSON) {
+      document.getElementById('questName').textContent = 'Квест не выбран';
+      showNotification('Пожалуйста, выберите квест на главной странице', 'error');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+      return;
+    }
+
+    selectedQuestData = JSON.parse(selectedQuestJSON);
+
+    // Фото и описание
+document.getElementById('questImage').src = selectedQuestData.image;
+document.getElementById('questTitle').textContent = selectedQuestData.title;
+document.getElementById('questDescription').textContent = selectedQuestData.description;
+
+// Ограничения
+document.getElementById('questDuration').textContent = selectedQuestData.duration;
+document.getElementById('questPlayers').textContent =
+  `${selectedQuestData.playersMin}–${selectedQuestData.playersMax}`;
+document.getElementById('questAge').textContent = selectedQuestData.age;
+
+// Ограничиваем ввод игроков
+playersInput.value = Math.max(
+  selectedQuestData.playersMin,
+  Math.min(playersInput.value, selectedQuestData.playersMax)
+);
+
+    
+    // Отображаем название квеста
+    document.getElementById('questName').textContent = selectedQuestData.title;
+    document.getElementById('summaryQuest').textContent = selectedQuestData.title;
+    
+    // Устанавливаем базовую цену
+    const basePrice = selectedQuestData.basePrice || 3500;
+    document.getElementById('basePrice').textContent = basePrice.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('totalPrice').textContent = basePrice.toLocaleString('ru-RU') + ' ₽';
+
+    // Инициализируем календарь и время
+    renderCalendar(new Date());
+    generateTimeSlots();
+    
+    // Заполняем форму данными пользователя если авторизован
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+      document.getElementById('nameInput').value = currentUser.name || '';
+      document.getElementById('phoneInput').value = currentUser.phone || '';
+      document.getElementById('emailInput').value = currentUser.email || '';
+    }
+  });
+
+  // ========== ЦЕНА И ИГРОКИ ==========
+  const BASE_PRICE = 3500;
+  const EXTRA_PER_PLAYER = 500;
+  const playersInput = document.getElementById('playersInput');
+  const playersMinus = document.getElementById('playersMinus');
+  const playersPlus = document.getElementById('playersPlus');
+  const summaryPlayers = document.getElementById('summaryPlayers');
+  const totalPriceEl = document.getElementById('totalPrice');
+  const basePriceEl = document.getElementById('basePrice');
+  const extraPriceEl = document.getElementById('extraPrice');
+
+  function updatePrice() {
+    let players = parseInt(playersInput.value, 10) || 4;
+    if (players < 2) players = 2;
+    if (players > 12) players = 12;
+    playersInput.value = players;
+
+    const basePrice = selectedQuestData ? selectedQuestData.basePrice : BASE_PRICE;
+    const extraPlayers = Math.max(0, players - 4);
+    const extraCost = extraPlayers * EXTRA_PER_PLAYER;
+    const total = basePrice + extraCost;
+
+    basePriceEl.textContent = basePrice.toLocaleString('ru-RU') + ' ₽';
+    extraPriceEl.textContent = extraCost > 0 ? '+' + extraCost.toLocaleString('ru-RU') + ' ₽' : '0 ₽';
+    totalPriceEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+
+    const word = players === 1 ? 'игрок' : players >= 2 && players <= 4 ? 'игрока' : 'игроков';
+    summaryPlayers.textContent = players + ' ' + word;
+  }
+
+  if (playersMinus && playersPlus && playersInput) {
+    playersMinus.addEventListener('click', (e) => {
+      e.preventDefault();
+      playersInput.value = (parseInt(playersInput.value, 10) || 4) - 1;
+      updatePrice();
+    });
+    playersPlus.addEventListener('click', (e) => {
+      e.preventDefault();
+      playersInput.value = (parseInt(playersInput.value, 10) || 4) + 1;
+      updatePrice();
+    });
+  }
+
+  // ========== КАЛЕНДАРЬ ==========
+  const dateInput = document.getElementById('dateInput');
+  const calendarPopup = document.getElementById('calendarPopup');
+  const calendarTitle = document.getElementById('calendarTitle');
+  const calendarDays = document.getElementById('calendarDays');
+  const prevMonthBtn = document.getElementById('prevMonth');
+  const nextMonthBtn = document.getElementById('nextMonth');
+  const summaryDateTime = document.getElementById('summaryDateTime');
+
+  let currentDate = new Date();
+
+  function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startWeekDay = (firstDay.getDay() + 6) % 7;
+
+    calendarTitle.textContent = date.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
+
+    calendarDays.innerHTML = '';
+    
+    // Пустые ячейки
+    for (let i = 0; i < startWeekDay; i++) {
+      const empty = document.createElement('div');
+      calendarDays.appendChild(empty);
+    }
+
+    // Дни месяца
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = day;
+      
+      const cellDate = new Date(year, month, day);
+      cellDate.setHours(0, 0, 0, 0);
+
+      // Отключаем прошлые даты
+      if (cellDate < today) {
+        btn.disabled = true;
+        btn.className = 'w-8 h-8 rounded-full text-sm text-gray-300 dark:text-gray-600 cursor-not-allowed';
+      } else {
+        btn.className = 'w-8 h-8 rounded-full text-sm flex items-center justify-center ' +
+          'hover:bg-blue-100 hover:text-blue-700 dark:hover:bg-slate-700 dark:hover:text-white cursor-pointer';
+        
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          dateInput.value = cellDate.toLocaleDateString('ru-RU');
+          calendarPopup.classList.add('hidden');
+          updateSummaryDateTime();
+        });
+      }
+
+      calendarDays.appendChild(btn);
+    }
+  }
+
+  function updateSummaryDateTime() {
+    const dateText = dateInput.value || '—';
+    const timeText = document.getElementById('timeInput').value || '';
+    summaryDateTime.textContent = timeText ? `${dateText} • ${timeText}` : dateText;
+  }
+
+  if (dateInput && calendarPopup) {
+    dateInput.addEventListener('click', () => {
+      calendarPopup.classList.toggle('hidden');
+    });
+
+    prevMonthBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar(currentDate);
+    });
+
+    nextMonthBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar(currentDate);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!calendarPopup.contains(e.target) && e.target !== dateInput) {
+        calendarPopup.classList.add('hidden');
+      }
+    });
+  }
+
+  // ========== ВРЕМЯ ==========
+  const timeInput = document.getElementById('timeInput');
+  const timePopup = document.getElementById('timePopup');
+
+  function generateTimeSlots() {
+    timePopup.innerHTML = '';
+    const ul = document.createElement('ul');
+    ul.className = 'w-full divide-y divide-gray-100 dark:divide-slate-800';
+
+    for (let h = 10; h <= 22; h++) {
+      for (let m of [0, 30]) {
+        const label = `${String(h).padStart(2, '0')}:${m === 0 ? '00' : '30'}`;
+        const li = document.createElement('li');
+        li.className = 'px-3 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 cursor-pointer text-sm';
+        li.textContent = label;
+        li.dataset.time = label;
+        
+        li.addEventListener('click', (e) => {
+          e.preventDefault();
+          timeInput.value = label;
+          timePopup.classList.add('hidden');
+          updateSummaryDateTime();
+        });
+
+        ul.appendChild(li);
+      }
+    }
+
+    timePopup.appendChild(ul);
+  }
+
+  if (timeInput && timePopup) {
+    timeInput.addEventListener('click', () => {
+      timePopup.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!timePopup.contains(e.target) && e.target !== timeInput) {
+        timePopup.classList.add('hidden');
+      }
+    });
+  }
+
+  // ========== ОТПРАВКА ФОРМЫ ==========
+  const bookingForm = document.getElementById('bookingForm');
+
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const currentUser = getCurrentUser();
+      
+      if (!currentUser) {
+        showNotification('Пожалуйста, войдите в аккаунт', 'error');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+        return;
+      }
+
+      const dateValue = dateInput.value;
+      const timeValue = timeInput.value;
+
+      if (!dateValue || !timeValue) {
+        showNotification('Выберите дату и время', 'error');
+        return;
+      }
+
+      const nameValue = document.getElementById('nameInput').value;
+      const phoneValue = document.getElementById('phoneInput').value;
+      const emailValue = document.getElementById('emailInput').value;
+
+      if (!nameValue || !phoneValue || !emailValue) {
+        showNotification('Заполните все обязательные поля', 'error');
+        return;
+      }
+
+      // Создаём объект бронирования
+      const booking = {
+        id: Date.now().toString(),
+        userId: currentUser.id,
+        questTitle: selectedQuestData.title,
+        questPrice: selectedQuestData.basePrice,
+        date: dateValue,
+        time: timeValue,
+        participants: parseInt(playersInput.value),
+        totalPrice: parseInt(document.getElementById('totalPrice').textContent.replace(/\D/g, '')),
+        name: nameValue,
+        phone: phoneValue,
+        email: emailValue,
+        comment: document.getElementById('commentInput').value,
+        status: 'confirmed',
+        bookedAt: new Date().toISOString()
+      };
+
+      // Получаем старые бронирования из localStorage
+      let userBookings = JSON.parse(localStorage.getItem(`bookings_${currentUser.id}`)) || [];
+      
+      // Добавляем новое бронирование
+      userBookings.push(booking);
+      
+      // Сохраняем обратно в localStorage
+      localStorage.setItem(`bookings_${currentUser.id}`, JSON.stringify(userBookings));
+
+      // Очищаем sessionStorage
+      sessionStorage.removeItem('selectedQuest');
+
+      showNotification('✅ Квест успешно забронирован! Переводим в личный кабинет...');
+      setTimeout(() => {
+        window.location.href = 'account.html';
+      }, 1500);
+    });
+  }
+
+  
+
+
+  // Инициализация при загрузке
+  updatePrice();
+</script>
+
+<style>
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(400px);
+    }
+  }
+</style>
+
+</body>
+</html>

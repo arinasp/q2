@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DarkRoom — квесты в Чебоксарах</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marmelad&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Важное: принудительно включаем режим dark по классу -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
+
+  <!-- Ставим/убираем класс dark до отрисовки -->
+ <script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      fontFamily: {
+        sans: ['Marmelad', 'sans-serif']
+      }
+    }
+  };
+</script>
+
+</head>
+<body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
+
+<!-- HEADER -->
+<!-- HEADER -->
+<header class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/90 dark:bg-black/80 backdrop-blur">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <div class="text-2xl font-extrabold uppercase tracking-widest">
+      Dark<span class="text-blue-500">Room</span>
+    </div>
+
+    <!-- Десктопное меню -->
+    <nav class="hidden md:flex space-x-6 text-gray-700 dark:text-gray-300">
+      <a href="index.html" class="hover:text-blue-600 dark:hover:text-white font-semibold">Квесты</a>
+      <a href="booking.html" class="hover:text-blue-600 dark:hover:text-white">Бронирование</a>
+      <a href="#faq" class="hover:text-blue-600 dark:hover:text-white">FAQ</a>
+      <a href="#footerContacts" class="hover:text-blue-600 dark:hover:text-white">Контакты</a>
+    </nav>
+
+    <!-- Кнопки действий (десктоп) -->
+    <div class="flex items-center space-x-3">
+      <!-- Кнопка темы - всегда видна -->
+      <button id="themeToggle"
+              class="w-10 h-10 flex items-center justify-center rounded-full
+                     border border-gray-300 dark:border-slate-700
+                     bg-white dark:bg-slate-900
+                     text-gray-700 dark:text-gray-200
+                     hover:border-blue-500 dark:hover:border-blue-400
+                     transition"
+              aria-label="Переключить тему">
+        <span id="themeIcon">☾</span>
+      </button>
+
+      <!-- Десктопные кнопки входа/регистрации -->
+      <div class="hidden md:flex items-center space-x-3">
+        <span id="userGreeting" class="text-gray-600 dark:text-gray-300 font-medium"></span>
+        <a id="loginBtn" href="login.html"
+           class="px-4 py-2 border border-blue-600 rounded-full
+                  text-blue-600 hover:bg-blue-600 hover:text-white transition">
+          Войти
+        </a>
+        <a id="registerBtn" href="register.html"
+           class="bg-blue-600 px-4 py-2 rounded-full hover:bg-blue-700 text-white transition">
+          Регистрация
+        </a>
+        <a id="accountBtn" href="account.html"
+           class="px-4 py-2 border border-blue-600 rounded-full
+                  text-blue-600 hover:bg-blue-600 hover:text-white transition"
+           style="display: none;">
+          Личный кабинет
+        </a>
+        <button id="logoutBtn" onclick="logout()"
+           class="px-4 py-2 border border-red-600 rounded-full text-red-600 hover:bg-red-600 hover:text-white transition"
+           style="display: none;">
+          Выйти
+        </button>
+      </div>
+    </div>
+
+    <!-- Бургер-кнопка для мобильных -->
+    <button id="burgerBtn" class="burger md:hidden flex flex-col justify-center items-center w-10 h-10 relative">
+      <span class="burger-line top-line bg-gray-700 dark:bg-gray-300"></span>
+      <span class="burger-line mid-line bg-gray-700 dark:bg-gray-300"></span>
+      <span class="burger-line bottom-line bg-gray-700 dark:bg-gray-300"></span>
+    </button>
+  </div>
+
+  <!-- Мобильное меню (выпадающее) -->
+  <div id="mobileMenu" class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
+    <div class="px-6 py-4">
+      <nav class="flex flex-col space-y-4">
+        <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-semibold py-2 transition-colors">Квесты</a>
+        <a href="booking.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">Бронирование</a>
+        <a href="#faq" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">FAQ</a>
+        <a href="#footerContacts" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white py-2 transition-colors">Контакты</a>
+      </nav>
+      
+      <div class="mt-6 pt-6 border-t border-gray-200 dark:border-slate-800">
+        <!-- Для неавторизованных пользователей -->
+        <div id="mobileAuthButtons" class="flex flex-col space-y-3">
+          <a id="mobileLoginBtn" href="login.html"
+             class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+            Войти
+          </a>
+          <a id="mobileRegisterBtn" href="register.html"
+             class="text-center py-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white transition-colors">
+            Регистрация
+          </a>
+        </div>
+        
+        <!-- Для авторизованных пользователей -->
+        <div id="mobileUserSection" class="hidden flex-col space-y-3">
+          <div class="text-center py-3 text-gray-600 dark:text-gray-300 font-medium">
+            <span id="mobileUserGreeting"></span>
+          </div>
+          <a id="mobileAccountBtn" href="account.html"
+             class="text-center py-3 border border-blue-600 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+            Личный кабинет
+          </a>
+          <button onclick="logout()"
+             class="text-center py-3 border border-red-600 rounded-lg text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+            Выйти
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- HERO ВО ВСЮ ШИРИНУ -->
+<section id="heroSection"
+  class="relative h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden"
+  style="background-image: url('./img/b.jpg');">
+
+  <!-- ГРАДИЕНТ -->
+  <div class="absolute inset-0"
+    style="background: linear-gradient(to right, 
+      rgba(0, 0, 0, 0.95) 0%, 
+      rgba(0, 0, 0, 0.85) 20%, 
+      rgba(0, 0, 0, 0.7) 40%, 
+      rgba(0, 0, 0, 0.5) 60%, 
+      rgba(0, 0, 0, 0.3) 80%, 
+      rgba(0, 0, 0, 0) 100%);">
+  </div>
+
+  <!-- КОНТЕНТ ПО ЦЕНТРУ -->
+  <div class="relative h-full max-w-7xl mx-auto px-8 flex flex-col justify-center items-start">
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-white">
+      DarkRoom — ОСТРЫЕ<br />
+      ВПЕЧАТЛЕНИЯ И<br />
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+        НЕЗАБЫВАЕМЫЕ ЭМОЦИИ
+      </span>
+    </h1>
+
+    <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-2xl">
+      Уникальные квесты с оригинальными сценариями в Чебоксарах
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+      <button class="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-bold text-lg">
+        ВЫБРАТЬ КВЕСТ
+      </button>
+      <button class="px-8 py-4 border-2 border-white text-white rounded-full font-bold text-lg">
+        Связаться
+      </button>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 py-10">
+
+
+   <!-- КВЕСТЫ -->
+<section class="mt-16">
+  <h2 class="text-3xl font-extrabold mb-8 text-gray-900 dark:text-white">Квесты Чебоксар</h2>
+
+  <!-- Сетка: все карточки одинаковой высоты, кнопка внизу -->
+  <div class="grid md:grid-cols-3 gap-8">
+    
+    <!-- Карточка 1: Обитель зла: Апокалипсис -->
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-blue-500 to-blue-800">
+    <img src="./img/q1.jpg" 
+         alt="Обитель зла: Апокалипсис"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+    <div class="absolute top-4 right-4 bg-blue-600/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
+      ХИТ
+    </div>
+  </div>
+  
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      Обитель зла: Апокалипсис
+    </h3>
+    
+    <!-- Видимое описание -->
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+      Мир поглощён вирусом корпорации «Амбрелла». Работники лаборатории допустили ошибку в ходе эксперимента, выпустив на волю смертельно опасный вирус.
+      
+      <!-- Продолжение (скрыто по умолчанию) -->
+      <span class="hidden expanded-text-apocalypse">
+        Большая часть населения планеты погибла. Вы — одни из немногих выживших, которые отправились в лабораторию корпорации на поиски антивируса, способного остановить распространение инфекции. Лаборатория охраняется искусственным интеллектом «Красная Королева». Вам нужно отключить её и найти антивирус в одной из симуляционных комнат. После обнаружения вашего присутствия в лаборатории, «Красная Королева» включит режим консервации, чтобы остановить вас. На поиск антивируса будет ровно 80 минут. Найдите антивирус и покиньте лабораторию.
+      </span>
+    </div>
+
+    <!-- Кнопка "Читать далее" -->
+    <button onclick="toggleExpanded(this, 'apocalypse')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-apocalypse">Читать далее</span>
+      <svg class="expand-icon-apocalypse w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <!-- Характеристики -->
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">80 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">2-6</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">16+</div>
+      </div>
+    </div>
+    
+    <!-- Рейтинг -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(124)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">3500 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  'Обитель зла: Апокалипсис',
+  3500,
+  {
+    image: './img/q1.jpg',
+    description: 'Мир поглощён вирусом корпорации «Амбрелла». Вы — выжившие, отправившиеся за антивирусом.',
+    duration: '80 минут',
+    playersMin: 2,
+    playersMax: 6,
+    age: '16+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+
+    </div>
+  </div>
+</article>
+
+<!-- Карточка 2: Сайлент Хилл. Элис -->
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-red-500 to-red-800">
+    <img src="./img/q2.webp" 
+         alt="Сайлент Хилл. Элис"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+    <div class="absolute top-4 right-4 bg-green-600/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
+      ⭐ НОВОЕ
+    </div>
+  </div>
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      Сайлент Хилл. Элис
+    </h3>
+    
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+      Ранним утром, проснувшись у себя на кровати, вы замечаете, что вашей дочери нет дома. На ее столе вы обнаружили записку: «они ждут меня, они просят моей помощи»
+      
+      <span class="hidden expanded-text-silent">
+        и рисунок заброшенного еще 30 лет назад города, который был разрушен вследствие крупномасштабного пожара. Недолго думая, вы взяли ключи от машины и тронулись в запретную точку. Единственная ваша цель — найти дочь, чего бы это вам не стоило.
+      </span>
+    </div>
+
+    <button onclick="toggleExpanded(this, 'silent')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-silent">Читать далее</span>
+      <svg class="expand-icon-silent w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">90 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">4-9</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">14+</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(94)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">4500 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  'Сайлент Хилл. Элис',
+  4500,
+  {
+    image: './img/q2.webp',
+    description: ' Ранним утром, проснувшись у себя на кровати, вы замечаете, что вашей дочери нет дома. На ее столе вы обнаружили записку: «они ждут меня, они просят моей помощи»',
+    duration: '90 минут',
+    playersMin: 4,
+    playersMax: 9,
+    age: '14+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+    </div>
+  </div>
+</article>
+
+<!-- Карточка 3: ОБИТЕЛЬ ЗЛА -->
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-purple-500 to-pink-800">
+    <img src="./img/q3.webp" 
+         alt="ОБИТЕЛЬ ЗЛА"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+  </div>
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      ОБИТЕЛЬ ЗЛА
+    </h3>
+    
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+      Вы – работники корпорации «Амбрелла», занимавшиеся разработкой вирусного оружия в секретном подземном комплексе. В процессе работы произошла утечка вируса из пробирки...
+      
+      <span class="hidden expanded-text-evil">
+        он вышел из под контроля. Были заражены работники комплекса – ваши коллеги. Оказалось, вирус полностью поглощает разум и тело заражённого – он перестаёт быть собой. Инфицированного интересует только одно – пища. А пища для него – это вы. Ни в коем случае не давайте к себе приблизиться, тем более укусить. Также помните – они реагируют на свет и звук. Когда они рядом – старайтесь не привлекать их внимание. Из-за чрезвычайного происшествия в комплексе активировалась программа дезинфекции. Здание будет уничтожено через 90 минут. Ваша задача – выбраться до уничтожения комплекса. Удачи!
+      </span>
+    </div>
+
+    <button onclick="toggleExpanded(this, 'evil')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-evil">Читать далее</span>
+      <svg class="expand-icon-evil w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">90 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">2-12</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">14+</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(84)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">2500 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  ' ОБИТЕЛЬ ЗЛА',
+  2500,
+  {
+    image: './img/q3.webp',
+    description: 'Вы – работники корпорации «Амбрелла», занимавшиеся разработкой вирусного оружия в секретном подземном комплексе. В процессе работы произошла утечка вируса из пробирки...',
+    duration: '90 минут',
+    playersMin: 2,
+    playersMax: 12,
+    age: '14+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+    </div>
+  </div>
+</article>
+
+<!-- Карточка 4: Очень странные дела -->
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-800">
+    <img src="./img/q4.jpeg" 
+         alt="Очень странные дела"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+  </div>
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      Очень странные дела
+    </h3>
+    
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+      В Хоукинсе снова исчезают люди. Полиция делает ставки на серийного убийцу. Правительство штата бездействует. После загадочного исчезновения вашей подруги Максин вы решаете взять дело в свои руки...
+      
+      <span class="hidden expanded-text-strangers">
+        и начать собственное расследование. Национальная лаборатория Хоукинса давно обросла дурной славой – ходят слухи о страшных экспериментах над людьми. И рассказы о межпространственных измерениях. Подняв архивы, вы обнаружили информацию о некой «Изнанке» – обратной стороне нашего мира. В «Изнанке» обитают опасные существа, желающие смерти всем, кто ступит на их землю. Единственный известный портал туда находится где-то в лаборатории. Это место и становится вашим первым пунктом назначения, ведь вы точно уверены, что ваша подруга связана с обратной стороной. Лаборатория окружена надежной охраной, но неожиданно вам приходит письмо от давней знакомой. Узнав о пропаже вашей подруги, она предлагает помощь. Она – ваш единственный путь, она может провести на территорию незамеченными.
+      </span>
+    </div>
+
+    <button onclick="toggleExpanded(this, 'strangers')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-strangers">Читать далее</span>
+      <svg class="expand-icon-strangers w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">60 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">2-10</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">12+</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(389)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">6000 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  '  Очень странные дела',
+  6000,
+  {
+    image: './img/q4.jpeg',
+    description: ' В Хоукинсе снова исчезают люди. Полиция делает ставки на серийного убийцу. Правительство штата бездействует. После загадочного исчезновения вашей подруги Максин вы решаете взять дело в свои руки...',
+    duration: '60 минут',
+    playersMin: 2,
+    playersMax: 10,
+    age: '12+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+    </div>
+  </div>
+</article>
+
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-800">
+    <img src="./img/q5.jpg" 
+         alt="Перформанс СДАЕТСЯ КВАРТИРА"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+  </div>
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      Перформанс СДАЕТСЯ КВАРТИРА
+    </h3>
+    
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+В подростковом возрасте все мечтали съехать от родителей в свою, хоть и съемную, квартиру по одной простой причине: в своем уютном гнездышке можно скрыться от всех проблем. Но не всем везет со съемной квартирой, особенно с соседями...     
+      <span class="hidden expanded-text-st">
+У вас появилась отличная возможность встретиться с риелтором и посмотреть хорошую квартиру! Такие небольшие деньги за площадь в 300 кв. метров. Нет, вы ничего не подумайте, это почти обычная квартира в совсем необычном месте, которую срочно нужно сдать. Мы вас ждем! Но когда приедете, постарайтесь не шуметь...
+    </span>
+    </div>
+
+    <button onclick="toggleExpanded(this, 'st')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-st">Читать далее</span>
+      <svg class="expand-icon-st w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">75 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">2-12</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">18+</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(239)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">5500 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  '  Перформанс СДАЕТСЯ КВАРТИРА',
+  5500,
+  {
+    image: './img/q5.1.jpg',
+    description: 'В подростковом возрасте все мечтали съехать от родителей в свою, хоть и съемную, квартиру по одной простой причине: в своем уютном гнездышке можно скрыться от всех проблем. Но не всем везет со съемной квартирой, особенно с соседями...',
+    duration: '75 минут',
+    playersMin: 2,
+    playersMax: 12,
+    age: '18+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+    </div>
+  </div>
+</article>
+
+<article class="group bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition flex flex-col">
+  <div class="relative h-48 overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-800">
+    <img src="./img/q6.jpg" 
+         alt="ПРОКЛЯТИЕ АННАБЕЛЬ ЗОВ ТЬМЫ"
+         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+  </div>
+  <div class="p-6 flex flex-col h-full">
+    <h3 class="font-bold text-xl mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition">
+      ПРОКЛЯТИЕ АННАБЕЛЬ ЗОВ ТЬМЫ
+    </h3>
+    
+    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+     Штат Санта-Моника 1948 год, США.<br> - Добрый день! Служба опеки штата Санта-Моника. Что у вас случилось?
+      
+      <span class="hidden expanded-text-an">
+- Добрый день! Я шериф штата Санта-Моника. Месяц назад первый раз выезжал в дом семьи Хиггинс по обращению соседей на громкие крики и непонятные, странный звуки доносящиеся с этого участка. Соседи утверждали, что давно не видно родителей девочек. Тогда дети уверили меня в том, что они уехали в магазин.<br> - Да, слышали об этом вызове. <br>- Сегодня я снова посещал этот дом, но родителей опять не было. девочки ведут себя очень странно.. <br>- Подскажите пожалуйста, что именно с ними?<br> - Старшая какая-то отрешенная.. как будто находится в другом мире! Младшая же, то смеется, то плачет, иногда вообще кажется, что это совсем не ребенок..<br> - Вы видели какие-нибудь травмы на девочках? Может они как-то не здорово выглядят?<br> - Младшая бледная какая-то… Да не знаю я! В этом доме невозможно находится… Ощущение, что за тобой кто-то постоянно следит, а взгляд у младшей, просто до мурашек пробирает! Я считаю, что вы должны немедленно выехать к этой семье!! <br>- Приняли информацию, направим сотрудников на выезд к Хиггинсам. Вам как представителям органов опеки штата Санта-Моника надлежит посетить дом семьи Хиггинс. В последнее время,  в полицию местного округа неоднократно поступали жалобы от местных жителей на громкие крики из дома семьи Хиггинс. Также по нашей информации Пит и Шерон Хиггинс давно не появлялись в городе, что согласно закону делает их безвести пропавшими. У семьи Хиггинсов есть две несовершеннолетние дочери. Ваша задача посетить семейный дом Хиггинсов и узнать о состоянии родителей, принять решение в отношении несовершеннолетних детей и принять решение на месте.    </span>
+    </div>
+
+    <button onclick="toggleExpanded(this, 'an')" 
+            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs font-semibold mb-4 flex items-center transition">
+      <span class="expand-text-an">Читать далее</span>
+      <svg class="expand-icon-an w-4 h-4 ml-1 transition transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-3 gap-3 mb-4 py-4 border-y border-gray-200 dark:border-slate-700">
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">60 мин</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">2-12</div>
+      </div>
+      <div class="text-center">
+        <div class="text-lg"></div>
+        <div class="text-xs text-gray-600 dark:text-gray-400 font-semibold">14+</div>
+      </div>
+    </div>
+    
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+      <span class="text-sm text-gray-500 dark:text-gray-400">(90)</span>
+    </div>
+
+    <div class="mt-auto flex items-center justify-between">
+      <div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">от</div>
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">6500 ₽</div>
+      </div>
+      <button onclick="bookQuest(
+  ' ПРОКЛЯТИЕ АННАБЕЛЬ ЗОВ ТЬМЫ',
+  6000,
+  {
+    image: './img/q6.jpg',
+    description: '      Штат Санта-Моника 1948 год, США.    - Добрый день! Служба опеки штата Санта-Моника. Что у вас случилось?',
+    duration: '60 минут',
+    playersMin: 2,
+    playersMax: 12,
+    age: '14+'
+  }
+)"class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:scale-105">
+  Забронировать →
+</button>
+    </div>
+  </div>
+</article>
+
+  </div>
+</section>
+
+    <div class="mt-10 flex flex-col md:flex-row md:justify-between md:items-center border border-blue-500/40 rounded-2xl p-4 bg-blue-50 dark:bg-slate-900/60 text-gray-800 dark:text-blue-100 gap-3">
+      <div>
+        Забронируйте 2 квеста и получите
+        <span class="font-semibold text-blue-600 dark:text-emerald-300">15% скидку</span> на второй.
+      </div>
+      <a href="index.html" class="text-blue-600 dark:text-emerald-300 font-semibold hover:underline">
+        Выбрать квесты
+      </a>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ -->
+<section class="mt-16">
+  <h2 class="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Отзывы игроков</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Виктор</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">03.07.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Праздновали день рождения, эмоции зашкаливают. Атмосфера и загадки — огонь!
+      </p>
+    </div>
+    
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Андреева</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">08.05.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Ходили первый раз на квест — теперь точно не последний. Все в восторге!
+      </p>
+    </div>
+    
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Сергей</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">15.04.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Отличная организация, интересные загадки и очень дружелюбный персонал.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Маша</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">22.03.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Супер! Команда очень внимательная. Помогли подсказками, когда застряли.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Иван</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">10.02.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Приводил сюда коллег. Все остались в восторге! Рекомендую всем друзьям.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between mb-3">
+        <span class="font-semibold text-gray-900 dark:text-white">Ольга</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">28.01.2025</span>
+      </div>
+      <div class="flex gap-1 mb-3">
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star text-yellow-400 text-xs"></i>
+        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+      </div>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Декорация просто шикарная! Погружение полное. Повторяю квесты уже в третий раз.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq" class="mt-16">
+  <h2 class="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Часто задаваемые вопросы</h2>
+  <div class="space-y-3">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800">
+      <button class="faq-toggle w-full text-left px-6 py-4 text-gray-900 dark:text-white font-semibold flex justify-between items-center">
+        <span>Что такое квест?</span>
+        <i class="fas fa-chevron-down text-blue-500"></i>
+      </button>
+      <div class="faq-content hidden px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm">
+        Это командная игра в реальности с тематическим сюжетом, загадками и заданиями на время.
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800">
+      <button class="faq-toggle w-full text-left px-6 py-4 text-gray-900 dark:text-white font-semibold flex justify-between items-center">
+        <span>Сколько человек может пройти квест одновременно?</span>
+        <i class="fas fa-chevron-down text-blue-500"></i>
+      </button>
+      <div class="faq-content hidden px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm">
+        Обычно 2–8 игроков, точная информация указана в описании каждого квеста.
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800">
+      <button class="faq-toggle w-full text-left px-6 py-4 text-gray-900 dark:text-white font-semibold flex justify-between items-center">
+        <span>Какая длительность квестов?</span>
+        <i class="fas fa-chevron-down text-blue-500"></i>
+      </button>
+      <div class="faq-content hidden px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm">
+        Квесты длятся от 60 до 90 минут в зависимости от сложности.
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800">
+      <button class="faq-toggle w-full text-left px-6 py-4 text-gray-900 dark:text-white font-semibold flex justify-between items-center">
+        <span>Есть ли возрастные ограничения?</span>
+        <i class="fas fa-chevron-down text-blue-500"></i>
+      </button>
+      <div class="faq-content hidden px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm">
+        Да, каждый квест имеет возрастное ограничение от 8+ до 18+. Выбирайте подходящий для вашей группы.
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<!-- FOOTER: контакты + карта -->
+<footer id="footerContacts" class="mt-16 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 pt-10">
+  <div class="max-w-7xl mx-auto px-4 pb-6">
+    <h2 class="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Остались вопросы?</h2>
+
+    <div class="grid md:grid-cols-2 gap-10 items-start mb-10">
+      <form class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-200 dark:border-slate-800 grid gap-4">
+        <input type="text" placeholder="Ваше имя"
+               class="p-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500
+                      dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        <input type="tel" placeholder="Телефон"
+               class="p-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500
+                      dark:bg-slate-950 dark:border-slate-700 dark:text-white" />
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 font-semibold transition">
+          Жду звонка
+        </button>
+      </form>
+
+      <address class="not-italic text-gray-700 dark:text-gray-300">
+        <p class="font-semibold text-lg mb-2"> Чебоксары</p>
+        <p class="font-semibold text-lg mb-2"> Режим работы</p>
+        <p>Ежедневно с 10:00 до 23:00</p>
+      </address>
+    </div>
+
+    <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Как нас найти</h3>
+    <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-800 mb-6 h-80">
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?um=constructor%3A&ll=47.2519%2C56.1322&z=13"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        allowfullscreen
+        class="w-full"
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="border-t border-gray-200 dark:border-slate-800 pt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+      © 2025 DarkRoom
+    </div>
+  </div>
+</footer>
+
+<!-- Скрипт -->
+<script>
+  // ========== УТИЛИТЫ ==========
+  function getCurrentUser() {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+
+  function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-xl text-white font-semibold shadow-lg z-50 flex items-center ${
+      type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
+    }`;
+    notification.innerHTML = `
+      <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-3"></i>
+      ${message}
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-out';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  function logout() {
+    if (confirm('Вы уверены, что хотите выйти?')) {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+  }
+
+  function bookQuest(title, basePrice, options = {}) {
+  const questData = {
+    title,
+    basePrice,
+    image: options.image,
+    description: options.description,
+    duration: options.duration,
+    playersMin: options.playersMin,
+    playersMax: options.playersMax,
+    age: options.age
+  };
+
+  sessionStorage.setItem('selectedQuest', JSON.stringify(questData));
+  window.location.href = 'booking.html';
+}
+
+ function updateUserUI() {
+    const currentUser = getCurrentUser();
+    const userGreeting = document.getElementById('userGreeting');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const accountBtn = document.getElementById('accountBtn');  // ← Измените cabinetBtn на accountBtn
+
+    if (currentUser) {
+      userGreeting.textContent = `Привет, ${currentUser.name}!`;
+      userGreeting.style.display = 'inline';
+      loginBtn.style.display = 'none';
+      registerBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      accountBtn.style.display = 'inline-block';  // ← Показываем кабинет
+    } else {
+      userGreeting.style.display = 'none';
+      loginBtn.style.display = 'inline-block';
+      registerBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      accountBtn.style.display = 'none';  // ← Скрываем кабинет
+    }
+  }
+
+
+  // ========== ТЕМА ==========
+ const themeBtn = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+function applyTheme(theme) {
+  const htmlElement = document.documentElement;
+  
+  if (theme === 'light') {
+    htmlElement.classList.remove('dark');
+    themeIcon.textContent = '☾';
+  } else {
+    htmlElement.classList.add('dark');
+    themeIcon.textContent = '☼';
+  }
+}
+
+  // ========== FAQ ==========
+  document.querySelectorAll('.faq-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling;
+      content.classList.toggle('hidden');
+    });
+  });
+
+  // ========== ИНИЦИАЛИЗАЦИЯ ==========
+  document.addEventListener('DOMContentLoaded', () => {
+    updateUserUI();
+  });
+
+   function toggleExpanded(button, questId) {
+    const expandedText = document.querySelector(`.expanded-text-${questId}`);
+    const expandIcon = document.querySelector(`.expand-icon-${questId}`);
+    const expandTextLabel = document.querySelector(`.expand-text-${questId}`);
+    
+    if (expandedText.classList.contains('hidden')) {
+      expandedText.classList.remove('hidden');
+      expandIcon.style.transform = 'rotate(180deg)';
+      expandTextLabel.textContent = 'Скрыть';
+    } else {
+      expandedText.classList.add('hidden');
+      expandIcon.style.transform = 'rotate(0deg)';
+      expandTextLabel.textContent = 'Читать далее';
+    }
+  }
+
+  // ========== СМЕНА ФОТО HERO ПО ТЕМАМ ==========
+function updateHeroBackground(theme) {
+  const heroSection = document.getElementById('heroSection');
+  
+  if (!heroSection) {
+    console.log('ОШИБКА: heroSection не найден!');
+    return;
+  }
+
+  const lightImage = 'img/w1.jpg';
+  const darkImage = 'img/b2.jpg';
+
+  if (theme === 'light') {
+    heroSection.style.backgroundImage = "url('" + lightImage + "')";
+    console.log('Установлена светлая фотография: ' + lightImage);
+  } else {
+    heroSection.style.backgroundImage = "url('" + darkImage + "')";
+    console.log('Установлена тёмная фотография: ' + darkImage);
+  }
+}
+
+// Применяем тему и фото при загрузке страницы
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+updateHeroBackground(savedTheme);
+
+// Переключение темы при клике
+if (themeBtn) {
+  themeBtn.addEventListener('click', function() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const nextTheme = isDark ? 'light' : 'dark';
+    
+    console.log('Переключаю тему на: ' + nextTheme);
+    
+    localStorage.setItem('theme', nextTheme);
+    applyTheme(nextTheme);
+    updateHeroBackground(nextTheme);
+  });
+}
+// ========== БУРГЕР-МЕНЮ ==========
+document.addEventListener('DOMContentLoaded', function() {
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+  const mobileUserSection = document.getElementById('mobileUserSection');
+  const mobileUserGreeting = document.getElementById('mobileUserGreeting');
+  const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+  const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+  const mobileAccountBtn = document.getElementById('mobileAccountBtn');
+
+  // Обновление UI пользователя для мобильной версии
+  function updateMobileUserUI() {
+    const currentUser = getCurrentUser();
+    
+    if (currentUser) {
+      // Мобильная версия
+      if (mobileUserSection) {
+        mobileUserSection.style.display = 'flex';
+        if (mobileUserGreeting) {
+          mobileUserGreeting.textContent = `Привет, ${currentUser.name}!`;
+        }
+      }
+      if (mobileAuthButtons) mobileAuthButtons.style.display = 'none';
+    } else {
+      // Мобильная версия
+      if (mobileUserSection) mobileUserSection.style.display = 'none';
+      if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+    }
+  }
+
+  // Переключение бургер-меню
+  let isMenuOpen = false;
+  
+  function toggleMobileMenu() {
+    isMenuOpen = !isMenuOpen;
+    
+    if (isMenuOpen) {
+      mobileMenu.classList.add('show');
+      if (burgerBtn) burgerBtn.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu.classList.remove('show');
+      if (burgerBtn) burgerBtn.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Закрытие меню при клике на ссылку
+  if (mobileMenu) {
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggleMobileMenu();
+      });
+    });
+  }
+
+  // Закрытие меню при клике вне меню
+  document.addEventListener('click', (e) => {
+    if (isMenuOpen && 
+        mobileMenu && 
+        !mobileMenu.contains(e.target) && 
+        burgerBtn && 
+        !burgerBtn.contains(e.target)) {
+      toggleMobileMenu();
+    }
+  });
+
+  // Закрытие меню при нажатии Escape
+  document.addEventListener('keydown', (e) => {
+    if (isMenuOpen && e.key === 'Escape') {
+      toggleMobileMenu();
+    }
+  });
+
+  // Обработчик бургер-кнопки
+  if (burgerBtn) {
+    burgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+  }
+
+  // Обновляем мобильный UI при загрузке
+  updateMobileUserUI();
+});
+
+</script>
+
+<style>
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(400px);
+    }
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      max-height: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+      transform: translateY(0);
+    }
+  }
+
+  .expanded-text-apocalypse:not(.hidden),
+  .expanded-text-silent:not(.hidden),
+  .expanded-text-evil:not(.hidden),
+  .expanded-text-strangers:not(.hidden) {
+    animation: slideDown 0.3s ease-out;
+  }
+
+/* Добавьте эти стили в конец вашего существующего <style> блока */
+.burger {
+  display: none; /* Скрыт по умолчанию */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .burger {
+    display: flex; /* Показываем только на мобильных */
+  }
+}
+
+.burger-line {
+  display: block;
+  height: 3px;
+  width: 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.burger.active .top-line {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.burger.active .mid-line {
+  opacity: 0;
+}
+
+.burger.active .bottom-line {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+#mobileMenu {
+  transition: all 0.3s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+#mobileMenu.show {
+  display: flex !important;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+</style>
+
+</body>
+</html>
