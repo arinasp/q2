@@ -1,6 +1,4 @@
-// main.js - для всех страниц
 document.addEventListener('DOMContentLoaded', function() {
-  // FAQ аккордеон
   document.querySelectorAll('.faq-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const content = btn.nextElementSibling;
@@ -8,10 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Переключение вкладок в кабинете (можно доработать)
   document.querySelectorAll('.account-menu button').forEach((btn, index) => {
     btn.addEventListener('click', () => {
-      // Логика переключения секций
     });
   });
 
@@ -21,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (burger && mobileMenu) {
     burger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden'); // Показываем / скрываем
+      mobileMenu.classList.toggle('hidden'); 
     });
   }
 });

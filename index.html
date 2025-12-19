@@ -9,16 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Важное: принудительно включаем режим dark по классу -->
   <script>
     tailwind.config = {
       darkMode: 'class',
     };
   </script>
 
-  <!-- Ставим/убираем класс dark до отрисовки -->
+ 
  <script>
   tailwind.config = {
     darkMode: 'class',
@@ -33,7 +31,6 @@
 </head>
 <body class="min-h-screen bg-white text-gray-900 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-950 dark:to-black dark:text-white">
 
-<!-- HEADER -->
 <!-- HEADER -->
 <header class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/90 dark:bg-black/80 backdrop-blur">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
@@ -51,7 +48,6 @@
 
     <!-- Кнопки действий (десктоп) -->
     <div class="flex items-center space-x-3">
-      <!-- Кнопка темы - всегда видна -->
       <button id="themeToggle"
               class="w-10 h-10 flex items-center justify-center rounded-full
                      border border-gray-300 dark:border-slate-700
@@ -141,13 +137,11 @@
 
 
 
-<!-- HERO ВО ВСЮ ШИРИНУ -->
 <section
   id="heroSection"
   class="relative w-full bg-cover bg-center bg-no-repeat overflow-hidden"
   style="background-image: url('./img/b.jpg');"
 >
-  <!-- ГРАДИЕНТ -->
   <div
     class="absolute inset-0"
     style="background: linear-gradient(
@@ -161,7 +155,6 @@
     );"
   ></div>
 
-  <!-- КОНТЕНТ ПО ЦЕНТРУ -->
   <div
     class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 flex items-center"
   >
@@ -206,7 +199,6 @@
 <section class="mt-16">
   <h2 class="text-3xl font-extrabold mb-8 text-gray-900 dark:text-white">Квесты Чебоксар</h2>
 
-  <!-- Сетка: все карточки одинаковой высоты, кнопка внизу -->
   <div class="grid md:grid-cols-3 gap-8">
     
     <!-- Карточка 1: Обитель зла: Апокалипсис -->
@@ -260,11 +252,7 @@
       </div>
     </div>
     
-    <!-- Рейтинг -->
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(124)</span>
-    </div>
+    
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -297,7 +285,7 @@
          alt="Сайлент Хилл. Элис"
          class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
     <div class="absolute top-4 right-4 bg-green-600/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
-      ⭐ НОВОЕ
+       НОВОЕ
     </div>
   </div>
   <div class="p-6 flex flex-col h-full">
@@ -336,10 +324,7 @@
       </div>
     </div>
     
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(94)</span>
-    </div>
+    
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -407,10 +392,7 @@
       </div>
     </div>
     
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(84)</span>
-    </div>
+   
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -478,10 +460,7 @@
       </div>
     </div>
     
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(389)</span>
-    </div>
+    
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -547,10 +526,7 @@
       </div>
     </div>
     
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(239)</span>
-    </div>
+    
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -616,10 +592,7 @@
       </div>
     </div>
     
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-      <span class="text-sm text-gray-500 dark:text-gray-400">(90)</span>
-    </div>
+    
 
     <div class="mt-auto flex items-center justify-between">
       <div>
@@ -836,7 +809,7 @@
       <address class="not-italic text-gray-700 dark:text-gray-300">
         <p class="font-semibold text-lg mb-2"> Чебоксары</p>
         <p class="font-semibold text-lg mb-2"> Режим работы</p>
-        <p>Ежедневно с 10:00 до 23:00</p>
+        <p>Ежедневно с 11:00 до 22:00</p>
       </address>
     </div>
 
@@ -859,7 +832,6 @@
   </div>
 </footer>
 
-<!-- Скрипт -->
 <script>
   // ========== УТИЛИТЫ ==========
   function getCurrentUser() {
@@ -914,7 +886,7 @@
     const loginBtn = document.getElementById('loginBtn');
     const registerBtn = document.getElementById('registerBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-    const accountBtn = document.getElementById('accountBtn');  // ← Измените cabinetBtn на accountBtn
+    const accountBtn = document.getElementById('accountBtn');  
 
     if (currentUser) {
       userGreeting.textContent = `Привет, ${currentUser.name}!`;
@@ -922,13 +894,13 @@
       loginBtn.style.display = 'none';
       registerBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
-      accountBtn.style.display = 'inline-block';  // ← Показываем кабинет
+      accountBtn.style.display = 'inline-block';  
     } else {
       userGreeting.style.display = 'none';
       loginBtn.style.display = 'inline-block';
       registerBtn.style.display = 'inline-block';
       logoutBtn.style.display = 'none';
-      accountBtn.style.display = 'none';  // ← Скрываем кабинет
+      accountBtn.style.display = 'none';  
     }
   }
 
@@ -1028,7 +1000,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
   const mobileAccountBtn = document.getElementById('mobileAccountBtn');
 
-  // Обновление UI пользователя для мобильной версии
   function updateMobileUserUI() {
     const currentUser = getCurrentUser();
     
@@ -1145,9 +1116,8 @@ document.addEventListener('DOMContentLoaded', function() {
     animation: slideDown 0.3s ease-out;
   }
 
-/* Добавьте эти стили в конец вашего существующего <style> блока */
 .burger {
-  display: none; /* Скрыт по умолчанию */
+  display: none; 
   flex-direction: column;
   justify-content: space-between;
   width: 30px;
@@ -1161,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 @media (max-width: 767px) {
   .burger {
-    display: flex; /* Показываем только на мобильных */
+    display: flex;
   }
 }
 

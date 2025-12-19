@@ -69,7 +69,6 @@
         Личный кабинет
       </a>
 
-      <!-- БУРГЕР КАК В INDEX.HTML -->
       <button id="burgerBtn" class="burger md:hidden flex flex-col justify-center items-center w-10 h-10 relative">
         <span class="burger-line top-line bg-gray-700 dark:bg-gray-300"></span>
         <span class="burger-line mid-line bg-gray-700 dark:bg-gray-300"></span>
@@ -78,7 +77,6 @@
     </div>
   </div>
 
-  <!-- МОБИЛЬНОЕ МЕНЮ (как в index.html) -->
   <div id="mobileMenu" class="absolute left-0 right-0 top-full bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-lg hidden md:hidden flex-col z-40">
     <div class="px-6 py-4">
       <nav class="flex flex-col space-y-4">
@@ -384,7 +382,6 @@
   });
 })();
 
-  // ========== БУРГЕР И МОБИЛЬНОЕ МЕНЮ (как в index.html) ==========
   document.addEventListener('DOMContentLoaded', function() {
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -462,7 +459,6 @@
     window.addEventListener('storage', updateMobileUserUI);
   });
 
-  // ========== ЗАГРУЗКА КВЕСТА ИЗ sessionStorage ==========
   let selectedQuestData = null;
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -909,7 +905,7 @@
   /* Улучшение для мобильных */
   @media (max-width: 640px) {
     input, textarea, select, button {
-      font-size: 16px !important; /* Предотвращает масштабирование в iOS */
+      font-size: 16px !important; 
     }
     
     #calendarPopup {
@@ -939,7 +935,7 @@
     }
   }
 
-  /* Стили бургера как в index.html */
+  
   .burger {
     display: none;
     flex-direction: column;
